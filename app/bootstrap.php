@@ -7,6 +7,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 require_once(__DIR__ . '/config/constants.php');
 require_once(__DIR__ . '/config/version.php');
+require_once(__DIR__ . '/session.php');
 
 date_default_timezone_set(SSIM_TIMEZONE);
 

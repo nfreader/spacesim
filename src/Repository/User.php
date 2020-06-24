@@ -19,6 +19,19 @@ final class User {
     $this->db = $db;
   }
 
+  public function login($email, $password) {
+    $user = $this->getUserByEmail($email);
+    if(!$user) return false;
+    if($user->activation_key) return false;
+    if(\password_verify($password, $user->password)) {
+      $_SESSION[SSIM_IDENT]['user'] = $user->id;
+      $_SESSION[SSIM_IDENT]['email'] = $user->email;
+      return true;
+    }
+    
+    return false;
+  }
+
   public function addNew($email, $password) {
     if($this->doesUserExist($email)) {
       return false;
@@ -41,18 +54,6 @@ final class User {
 
   }
 
-  private function doesUserExist($email) {
-    if(!$this->db->cell("SELECT email FROM ssim_users WHERE email = ?", $email)) {
-      return false;
-    }
-
-    return true;
-  }
-
-  private function isFirstUser() {
-    return (bool) $this->db->cell("SELECT count(id) as count FROM ssim_users");
-  }
-
   private function updateUser(int $id, string $key, $value) {
     if(!in_array($key, $this->fields)) return false;
     return $this->db->update('ssim_users',[
@@ -60,6 +61,20 @@ final class User {
     ], [
       'id' => $id
     ]);
+  }
+
+  private function getUserByEmail($email) {
+    return $this->db->row("SELECT u.id, u.email, u.password, u.created, u.activation_key FROM ssim_users u WHERE u.email = ?", $email);
+  }
+
+  private function doesUserExist($email) {
+    if(!$this->db->cell("SELECT email FROM ssim_users WHERE email = ?", $email))return false;
+
+    return true;
+  }
+
+  private function isFirstUser() {
+    return (bool) $this->db->cell("SELECT count(id) as count FROM ssim_users");
   }
 
   private function activateUser($id) {
