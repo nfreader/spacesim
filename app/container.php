@@ -67,10 +67,14 @@ return [
         $config['DB_PASS'],
         $options
       ]);
-      return $db;
     } catch (Exception $e){
-      return $e->getMessage();
+      if(SSIM_DEBUG){
+        var_dump($config);
+        die($e->getMessage());
+      }
+      return false;
     }
+    return $db;
   },
 
   // //Twig itself
@@ -86,4 +90,5 @@ return [
 
   //Session middleware
   SessionMiddleware::class => autowire(SessionMiddleware::class),
+
 ];
