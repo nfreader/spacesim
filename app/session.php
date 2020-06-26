@@ -33,12 +33,12 @@ if(php_sapi_name() != 'cli'){
   //Set session expiry to five days
   $time = $_SERVER['REQUEST_TIME'];
   $timeout_duration = 432000;
-  if (isset($_SESSION[SSIM_IDENT]['LAST_ACTIVITY']) &&
-     ($time - $_SESSION[SSIM_IDENT]['LAST_ACTIVITY']) > $timeout_duration) {
+  if (isset($_SESSION[SSIM_IDENT]['last_activity']) &&
+     ($time - $_SESSION[SSIM_IDENT]['last_activity']) > $timeout_duration) {
       session_unset();
       session_destroy();
       session_start();
   }
 
-  $_SESSION[SSIM_IDENT]['LAST_ACTIVITY'] = $time;
+  $_SESSION[SSIM_IDENT]['last_activity'] = $time;
 }
