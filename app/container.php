@@ -9,15 +9,17 @@ use Slim\Interfaces\RouteParserInterface;
 use Slim\Psr7\Factory\UriFactory;
 use Selective\Config\Configuration;
 
+use function DI\autowire;
+
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 use Slim\Views\TwigMiddleware;
 use Slim\Views\TwigRuntimeLoader;
 
-use ssim\Data\MySQLDatabase;
-
 use ParagonIE\EasyDB\EasyDB;
 use ParagonIE\EasyDB\Factory;
+
+use ssim\Middleware\SessionMiddleware;
 
 return [
   //Settings
@@ -81,4 +83,7 @@ return [
 
     return $twig;
   },
+
+  //Session middleware
+  SessionMiddleware::class => autowire(SessionMiddleware::class),
 ];
