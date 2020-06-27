@@ -49,6 +49,7 @@ final class Login extends ActionHandler{
     if(!$this->validateData($this->data)) return false;
     $user = $this->user->login($this->data->loginEmail, $this->data->loginPassword);
     if(!$user) return false;
+    $this->twig->getEnvironment()->addGlobal('user', $user);
     return true;
   }
 

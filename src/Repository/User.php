@@ -3,8 +3,10 @@
 namespace ssim\Repository;
 
 use ParagonIE\EasyDB\EasyDB as DB;
-// use ssim\Data\MySQLDatabase as DB;
-final class User {
+
+use ssim\Model\User as UserModel;
+
+class User {
 
   private $db;
 
@@ -15,8 +17,13 @@ final class User {
     'status'
   ];
 
+  public $currentUser = [];
+
   public function __construct(DB $db) {
     $this->db = $db;
+    if($_SESSION[SSIM_IDENT] && isset($_SESSION[SSIM_IDENT]['user'])){
+      $this->currentUser = new UserModel($this->getCurrentUser());
+    }
   }
 
   public function login($email, $password) {
@@ -26,7 +33,7 @@ final class User {
     if(\password_verify($password, $user->password)) {
       $_SESSION[SSIM_IDENT]['user'] = $user->id;
       $_SESSION[SSIM_IDENT]['email'] = $user->email;
-      return true;
+      return new UserModel($user);
     }
     
     return false;
@@ -65,6 +72,10 @@ final class User {
 
   private function getUserByEmail($email) {
     return $this->db->row("SELECT u.id, u.email, u.password, u.created, u.activation_key FROM ssim_users u WHERE u.email = ?", $email);
+  }
+
+  private function getCurrentUser(){
+    return $this->db->row("SELECT u.id, u.email FROM ssim_users u WHERE u.id = ? AND u.activation_key IS NULL", $_SESSION[SSIM_IDENT]['user']);
   }
 
   private function doesUserExist($email) {
