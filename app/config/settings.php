@@ -1,7 +1,8 @@
 <?php
 if(!defined('SSIM_DEBUG')) define('SSIM_DEBUG', FALSE);
+if(!defined('SSIM_ENVIRONMENT')) define('SSIM_ENVIRONMENT', 'PROD');
 define('SSIM_DB_DSN', SSIM_DB_METHOD.":host=".SSIM_DB_HOST.";port=".SSIM_DB_PORT.";dbname=".SSIM_DB_NAME);
-$year = SSIM_YEAR;
+$year = date('Y') + SSIM_YEAR;
 return [
   "twig" => [
     "template_dir" => __DIR__ . "/../../resources/views",

@@ -7,10 +7,16 @@ define('SSIM_DEBUG', FALSE);
 define('SSIM_NAME', 'Space Sim');
 
 # How far in the future the game is set
-define('SSIM_YEAR', date('Y') + 178);
+define('SSIM_YEAR', 178);
 
 #Timezone. This should probably be left alone.
 define('SSIM_TIMEZONE','UTC');
+
+#Session identifier. This should probably be left alone.
+define('SSIM_IDENT','SSIM');
+
+#Environment. Can be one of 'LOCAL', 'DEV', 'TEST', 'PROD' (default)
+define('SSIM_ENVIRONMENT','PROD');
 
 #Database credentials
 define('SSIM_DB_METHOD','mysql');
