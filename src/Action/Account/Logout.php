@@ -22,7 +22,7 @@ final class Logout extends ActionHandler{
     unset($_SESSION[SSIM_IDENT]);
     \session_destroy();
     parent::SuccessMessage("You have been logged out", true);
-
+    $this->twig->getEnvironment()->addGlobal('user', false);
     return $this->twig->render($response, 'home.twig', [
       'messages' => $this->messages
     ]);
