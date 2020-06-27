@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <style>
     #ssim_version_tag {
-      position: absolute;
+      position: fixed;
       bottom: 0;
       left: 0;
       font-family: monospace;
@@ -18,12 +18,17 @@
     <title>{{app.name}}</title>
   </head>
   <body>
-    <nav class="navbar static-top navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">{{app.name}}</a>
+    <nav class="navbar static-top navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="{{url_for('home')}}">{{app.name}}</a>
+        {% if user %}
+          <span>
+            <a class="btn btn-sm btn-outline-danger" type="button" href="{{url_for('logout')}}">Logout</a>
+          </span>
+        {% endif %}
       </div>
     </nav>
-    <div class="container-fluid pt-2">
+    <div class="container pt-2">
       {% if messages is defined and messages %}
         {% for message in messages %}
           <div class="alert alert-{{message.type}} alert-dismissible fade show">{{message.text}} 
@@ -34,9 +39,9 @@
         {% endfor %} 
       {% endif %}
       {% block page %}[No content defined for this block]{% endblock %}
+      
     </div>
-
-    <div id="ssim_version_tag" class="text-muted">{{app.name}} {{app.version}}</div>
+    <div id="ssim_version_tag" class="text-muted container">{{app.name}} {{app.version}} | {{app.date}} {{app.timezone}}</div>
     <!-- Optional JavaScript -->
     <!-- Popper.js first, then Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

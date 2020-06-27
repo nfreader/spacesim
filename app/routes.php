@@ -9,5 +9,6 @@ return function (App $app){
   $app->group('/account', function (RouteCollectorProxy $group){
     $group->post('/register', \ssim\Action\Account\Register::class)->setName('register');
     $group->post('/login', \ssim\Action\Account\Login::class)->setName('login');
+    $group->get('/logout', \ssim\Action\Account\Logout::class)->setName('logout');
   });
 };
