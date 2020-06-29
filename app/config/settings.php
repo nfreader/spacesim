@@ -26,4 +26,12 @@ return [
     'DB_PASS'   => SSIM_DB_PASS,
     'DB_DSN'    => SSIM_DB_DSN
   ],
+  'permissions_flags' => [
+    'ADMIN' => (1<<0),
+    'GALAXY' => (1<<1),
+    'GOVERNMENTS' => (1<<2),
+    'COMMODITIES' => (1<<3),
+    'OUTFITS' => (1<<4),
+    'SHIPS' => (1<<5)
+  ]
 ];  

@@ -6,8 +6,6 @@ use ssim\Repository\Permissions;
 
 class User {
 
-  private $perms;
-
   public $id = 0;
   public $email = null;
   public $permissions = false;
