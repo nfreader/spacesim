@@ -5,10 +5,12 @@ namespace ssim\Repository;
 use ParagonIE\EasyDB\EasyDB as DB;
 
 use ssim\Model\User as UserModel;
+use ssim\Repository\Permissions;
 
 class User {
 
   private $db;
+  private $permissons;
 
   private $fields = [
     'email',
@@ -19,8 +21,9 @@ class User {
 
   public $currentUser = [];
 
-  public function __construct(DB $db) {
+  public function __construct(DB $db, Permissions $permissions) {
     $this->db = $db;
+    $this->permissions = $permissions;
     if($_SESSION[SSIM_IDENT] && isset($_SESSION[SSIM_IDENT]['user'])){
       $this->currentUser = new UserModel($this->getCurrentUser());
     }
@@ -75,7 +78,9 @@ class User {
   }
 
   private function getCurrentUser(){
-    return $this->db->row("SELECT u.id, u.email FROM ssim_users u WHERE u.id = ? AND u.activation_key IS NULL", $_SESSION[SSIM_IDENT]['user']);
+    $user = $this->db->row("SELECT u.id, u.email FROM ssim_users u WHERE u.id = ? AND u.activation_key IS NULL", $_SESSION[SSIM_IDENT]['user']);
+    $user->permissions = $this->permissions->mapPermissions($user->id);
+    return $user;
   }
 
   private function doesUserExist($email) {
