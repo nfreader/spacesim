@@ -24,7 +24,6 @@ class Permissions extends Repository {
 
   public function mapPermissions($user) {
     $user = $this->db->row("SELECT p.flag, p.last_update FROM ssim_permissions p WHERE p.user = ?", $user);
-    var_dump($this->flags);
     foreach($this->flags as $p => $v) {
       if($user->flag & $v){
         $this->perms[] = $p;
