@@ -26,7 +26,7 @@ class Permissions extends Repository {
     $user = $this->db->row("SELECT p.flag, p.last_update FROM ssim_permissions p WHERE p.user = ?", $user);
     foreach($this->flags as $p => $v) {
       if($user->flag & $v){
-        $this->perms[] = $p;
+        $this->perms[$p] = true;
       }
     }
     return $this->perms;

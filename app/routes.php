@@ -11,4 +11,8 @@ return function (App $app){
     $group->post('/login', \ssim\Action\Account\Login::class)->setName('login');
     $group->get('/logout', \ssim\Action\Account\Logout::class)->setName('logout');
   });
+
+  $app->group('/galaxy', function (RouteCollectorProxy $group){
+    $group->get('/', \ssim\Action\Galaxy\ViewGalaxy::class)->setName('galaxy.view');
+  });
 };

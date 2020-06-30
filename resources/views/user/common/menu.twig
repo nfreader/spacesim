@@ -1,0 +1,15 @@
+<div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action disabled">
+    <i class="far fa-fw fa-id-card"></i> Manage Your Account
+  </a>
+  {% if user.permissions.ADMIN %}
+  <a href="#" class="list-group-item list-group-item-action disabled">
+    <i class="fas fa-fw fa-users"></i> Manage Users
+  </a>
+  {% endif %}
+  {% if user.permissions.GALAXY %}
+  <a href="{{url_for('galaxy.view')}}" class="list-group-item list-group-item-action">
+    <i class="fas fa-fw fa-atlas"></i> Manage Galaxy
+  </a>
+  {% endif %}
+</div>

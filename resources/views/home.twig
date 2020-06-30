@@ -3,7 +3,11 @@
 {% if not user %}
   {% include 'forms/account.html' %}
 {% else %}
-  <p>Sint deserunt deserunt ut amet culpa nulla veniam nisi nulla. Consectetur exercitation eiusmod nostrud cupidatat officia. Tempor tempor deserunt laboris duis est ut incididunt culpa ea et consectetur do minim ullamco. Et dolore deserunt veniam amet proident Lorem aute cupidatat incididunt sint Lorem aute. Irure aliquip nisi sunt exercitation consequat aliqua magna minim culpa in quis irure.</p>
+  <div class="row">
+    <div class="col-md-6">
+    {% include 'user/common/menu.twig' %}
+    </div>
+  </div>
 {% endif %}
 
 
