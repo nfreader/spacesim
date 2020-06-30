@@ -2,5 +2,9 @@
 {% block page %}
 <h1>Galaxy Editor</h1>
 <hr>
+{% if not galaxy %}
+  <p class="lead">It looks like this galaxy is empty. You can start by creating your first star system.</p>
+  {% include 'galaxy/common/AddStar.twig' %}
+{% endif %}
 
 {% endblock %}
