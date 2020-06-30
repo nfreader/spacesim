@@ -8,17 +8,9 @@
           <input type="text" class="form-control" id="starName" name="starName">
         </div>
       </div>
-      <div class="row g-3 mb-3">
-        <div class="col">
-          <input type="text" class="form-control" placeholder="X Coordinate" name="x_coord">
-        </div>
-        <div class="col">
-          <input type="text" class="form-control" placeholder="Y Coordinate" name="y_coord">
-        </div>
-      </div>
       <div class="row mb-3">
-        <div class="col">
-          <label for="inputState" class="form-label">Star Type</label>
+        <label class="col-sm-2 col-form-label">Star Type</label>
+        <div class="col-sm-10">
           <select id="inputState" class="form-select">
             <option selected disabled>Choose...</option>
             {% for v, t in starTypes %}
@@ -27,7 +19,15 @@
           </select>
         </div>
       </div>
-        <button type="submit" class="btn btn-success btn-block">Create</button>
+      <div class="row g-3 mb-3">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="X Coordinate" name="x_coord">
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Y Coordinate" name="y_coord">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success btn-block">Create</button>
     </form>
   </div>
 </div>
