@@ -4,11 +4,11 @@ namespace ssim\Model;
 
 class Star {
 
-  public $id = 0;
-  public $name = false;
-  public $type = null;
-  public $x_coord = 0;
-  public $y_coord = 0;
+  public $id;
+  public $name;
+  public $type;
+  public $x_coord;
+  public $y_coord;
 
   public function __construct($star) {
     $this->id = $star->id;
