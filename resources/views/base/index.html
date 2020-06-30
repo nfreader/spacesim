@@ -56,7 +56,10 @@
         {% endfor %} 
       {% endif %}
       {% block page %}[No content defined for this block]{% endblock %}
+      <hr>
+      {% if app.debug %}
       {{dump(user)}}
+      {% endif %}
     </div>
     <div id="ssim_version_tag" class="text-muted container">{{app.name}} {{app.version}} | {{app.date}} {{app.timezone}}</div>
     <!-- Optional JavaScript -->
