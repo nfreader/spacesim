@@ -12,6 +12,8 @@ use Slim\Views\Twig;
 
 final class ViewGalaxy extends ActionHandler{
   
+  protected $template = 'galaxy/view.twig';
+
   private $twig;
 
   public function __construct(Twig $twig) {
@@ -19,7 +21,8 @@ final class ViewGalaxy extends ActionHandler{
   }
 
   public function __invoke(ServerRequest $request, Response $response): ResponseInterface {
-    return $this->twig->render($response, 'galaxy/view.twig', [
+
+    return $this->twig->render($response, $this->template, [
       'messages' => $this->messages
     ]);
   }
