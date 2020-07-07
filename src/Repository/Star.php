@@ -2,11 +2,14 @@
 
 namespace ssim\Repository;
 
-use ParagonIE\EasyDB\EasyDB as DB;
+// use ParagonIE\EasyDB\EasyDB as DB;
 
 use ssim\Model\Star as StarModel;
 
-class Star {
+use ParagonIE\EasyDB\EasyDB as DB;
+use ssim\Notification\Flash;
+
+class Star extends Repository{
 
   private $filters = [
     'name' => [
@@ -33,11 +36,13 @@ class Star {
     ],
   ];
   
-  public function __construct(DB $db) {
+  public function __construct(DB $db, Flash $flash) {
     $this->db = $db;
+    $this->flash = $flash;
   }
 
   public function addNew(array $data) {
+    $this->flash->Success("Test");
     $this->data = $data;
     if(!$this->validateData()){
       return false;

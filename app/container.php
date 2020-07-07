@@ -16,10 +16,10 @@ use Slim\Views\TwigExtension;
 use Slim\Views\TwigMiddleware;
 use Slim\Views\TwigRuntimeLoader;
 
+use ssim\Extensions\TwigFlash;
+
 use ParagonIE\EasyDB\EasyDB;
 use ParagonIE\EasyDB\Factory;
-
-use ssim\Middleware\SessionMiddleware;
 
 return [
   //Settings
@@ -84,11 +84,8 @@ return [
     $twig = Twig::create($twigSettings['template_dir'], $twigSettings);
     $twig->getEnvironment()->addGlobal('app', $config->getArray('application'));
     $twig->addExtension(new \Twig\Extension\DebugExtension());
-
+    $twig->addExtension(new TwigFlash());
     return $twig;
   },
-
-  //Session middleware
-  SessionMiddleware::class => autowire(SessionMiddleware::class),
 
 ];

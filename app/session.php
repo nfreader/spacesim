@@ -11,7 +11,7 @@ if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on') {
 session_set_cookie_params(432000,'/',parse_url($_SERVER['REQUEST_URI'],PHP_URL_HOST),$secure, TRUE);
 
 if(php_sapi_name() != 'cli'){
-  if(!getenv('DEBUG')){
+  if(!SSIM_DEBUG){
     session_start([
         'cookie_httponly' => true,
         'cookie_secure' => $secure
