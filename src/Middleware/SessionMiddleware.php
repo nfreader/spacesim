@@ -25,8 +25,7 @@ class SessionMiddleware implements MiddlewareInterface {
 
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
     $this->twig->getEnvironment()->addGlobal('user', $this->user->currentUser);
-    $response = $handler->handle($request);
-    return $response;
+    return $handler->handle($request);
   }
 
 }
