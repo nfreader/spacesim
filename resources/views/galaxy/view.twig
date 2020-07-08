@@ -4,6 +4,27 @@
 <hr>
 {% if not galaxy %}
   <p class="lead">It looks like this galaxy is empty. You can start by creating your first star system.</p>
+{% endif %}
+<table class="table table-sm table-bordered">
+  <thead>
+    <tr>
+      <th>Star name</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for star in galaxy %}
+  <tr>
+    <th><a href="{{url_for('galaxy.star',{'id':star.id})}}">{{star.name}}</a></th>
+  </tr>
+  {% else %}
+  <tr>
+    <th>No galaxy yet</th>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% if user.permissions.GALAXY %}
   {% include 'galaxy/common/AddStar.twig' %}
 {% endif %}
 

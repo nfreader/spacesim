@@ -2,20 +2,23 @@
 
 namespace ssim\Model;
 
+use ssim\Data\StarTypes;
+
 class Star {
 
   public $id;
   public $name;
-  public $type;
-  public $x_coord;
-  public $y_coord;
+  public $type = [];
+  public $x;
+  public $y;
 
   public function __construct($star) {
     $this->id = $star->id;
     $this->name = $star->name;
-    $this->type = $star->type;
-    $this->x_coord = $star->x_coord;
-    $this->y_coord = $star->y_coord;
+    $this->type['short'] = $star->type;
+    $this->type['full'] = constant("ssim\Data\StarTypes::$star->type");
+    $this->x = $star->x;
+    $this->y = $star->y;
   }
 
 }

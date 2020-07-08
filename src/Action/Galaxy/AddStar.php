@@ -19,8 +19,6 @@ final class AddStar extends ActionHandler{
 
   private $twig;
 
-  public $defaultMessage = "This star system could not be added";
-
   public $types;
 
   public function __construct(Twig $twig, Star $star) {
@@ -30,16 +28,14 @@ final class AddStar extends ActionHandler{
   }
 
   public function __invoke(ServerRequest $request, Response $response): ResponseInterface {
-
-    parent::ErrorMessage($this->defaultMessage, true);
-
-    //TODO: Change to return error and success messages
-    if($star = $this->star->addNew($request->getParsedBody())){
-      parent::SuccessMessage("Your star system $star->name has been added", true);
+    if('POST' === $request->getMethod()) {
+      $this->star->addNew($request->getParsedBody());
+      return $this->twig->render($response, $this->template, [
+        'starTypes' => $this->types
+      ]);
     }
-
     return $this->twig->render($response, $this->template, [
-      'messages' => $this->messages,
+      'galaxy' => $this->star->getGalaxy(),
       'starTypes' => $this->types
     ]);
   }

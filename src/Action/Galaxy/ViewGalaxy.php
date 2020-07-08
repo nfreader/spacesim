@@ -10,25 +10,29 @@ use ssim\Action\ActionHandler;
 
 use Slim\Views\Twig;
 
+use ssim\Repository\Star;
+
 use ssim\Data\StarTypes;
 
 final class ViewGalaxy extends ActionHandler{
   
-  protected $template = 'galaxy/view.twig';
+  private $template = 'galaxy/view.twig';
+
+  private $star;
 
   private $twig;
 
   public $types;
 
-  public function __construct(Twig $twig) {
+  public function __construct(Twig $twig, Star $star) {
     $this->twig = $twig;
+    $this->star = $star;
     $this->types = (new StarTypes())->getTypes(); //TODO: Wrap in galaxy check
   }
 
   public function __invoke(ServerRequest $request, Response $response): ResponseInterface {
-
     return $this->twig->render($response, $this->template, [
-      'messages' => $this->messages,
+      'galaxy' => $this->star->getGalaxy(),
       'starTypes' => $this->types
     ]);
   }
