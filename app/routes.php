@@ -14,6 +14,7 @@ return function (App $app){
 
   $app->group('/galaxy', function (RouteCollectorProxy $group){
     $group->get('/', \ssim\Action\Galaxy\ViewGalaxy::class)->setName('galaxy.view');
+    $group->get('/star/{id}', \ssim\Action\Galaxy\ViewStar::class)->setName('galaxy.star');
     $group->map(['POST','GET'], '/addStar', \ssim\Action\Galaxy\AddStar::class)->setName('galaxy.newStar')->setArgument('permission','GALAXY');
   });
 };
