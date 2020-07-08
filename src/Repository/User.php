@@ -25,7 +25,7 @@ class User {
     $this->db = $db;
     $this->permissions = $permissions;
     if($_SESSION[SSIM_IDENT] && isset($_SESSION[SSIM_IDENT]['user'])){
-      $this->currentUser = new UserModel($this->getCurrentUser());
+      $this->currentUser = $this->getCurrentUser();
     }
   }
 
@@ -36,6 +36,7 @@ class User {
     if(\password_verify($password, $user->password)) {
       $_SESSION[SSIM_IDENT]['user'] = $user->id;
       $_SESSION[SSIM_IDENT]['email'] = $user->email;
+      $user->permissions = $this->permissions->mapPermissions($user->id);
       return new UserModel($user);
     }
     
@@ -80,7 +81,7 @@ class User {
   private function getCurrentUser(){
     $user = $this->db->row("SELECT u.id, u.email FROM ssim_users u WHERE u.id = ? AND u.activation_key IS NULL", $_SESSION[SSIM_IDENT]['user']);
     $user->permissions = $this->permissions->mapPermissions($user->id);
-    return $user;
+    return new UserModel($user);
   }
 
   private function doesUserExist($email) {
