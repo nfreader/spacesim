@@ -11,8 +11,7 @@ class StarTypes {
   const S = "Singularity"; //Oh no, a singularity
 
   static function getTypes() {
-    $oClass = new \ReflectionClass(__CLASS__);
-    return $oClass->getConstants();
+    return (new \ReflectionClass(__CLASS__))->getConstants();
   }
 
 }
