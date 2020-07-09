@@ -15,8 +15,7 @@ class Star {
   public function __construct($star) {
     $this->id = $star->id;
     $this->name = $star->name;
-    $this->type['short'] = $star->type;
-    $this->type['full'] = constant("ssim\Data\StarTypes::$star->type");
+    $this->type = constant("ssim\Data\StarTypes::$star->type");
     $this->x = $star->x;
     $this->y = $star->y;
   }

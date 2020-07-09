@@ -14,7 +14,7 @@ use ssim\Repository\Star;
 
 final class ViewStar extends ActionHandler{
   
-  private $template = 'galaxy/view.twig';
+  private $template = 'star/view.twig';
 
   private $star;
   private $twig;
@@ -24,8 +24,17 @@ final class ViewStar extends ActionHandler{
     $this->star = $star;
   }
 
-  public function __invoke(ServerRequest $request, Response $response): ResponseInterface {
-    return $this->twig->render($response, $this->template, [
+  public function __invoke(ServerRequest $request, Response $response, $args): 
+  ResponseInterface {
+    $id = \filter_var($args['id'], FILTER_VALIDATE_INT);
+    if($star = $this->star->getStar($id)) {
+      return $this->twig->render($response, $this->template, [
+        'star' => $star
+        // 'galaxy' => $this->star->getStar(),
+      ]);
+    }
+    return $this->twig->render($response, 'base/error.twig', [
+      'star' => $star
       // 'galaxy' => $this->star->getStar(),
     ]);
   }

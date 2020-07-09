@@ -57,6 +57,14 @@ class Star extends Repository{
     return $galaxy;
   }
 
+  public function getStar(int $id) {
+    if($star = $this->db->row("SELECT s.id, s.name, s.x, s.y, s.type FROM ssim_stars s WHERE s.id = ?", $id)){
+      return new StarModel($star);
+    }
+    $this->flash->Error("No star found with id: $id");
+    return false;
+  }
+
   public function addNew(array $data) {
     $this->data = $data;
     if(!$this->validateData()){

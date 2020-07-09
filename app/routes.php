@@ -16,5 +16,6 @@ return function (App $app){
     $group->get('/', \ssim\Action\Galaxy\ViewGalaxy::class)->setName('galaxy.view');
     $group->get('/star/{id}', \ssim\Action\Galaxy\ViewStar::class)->setName('galaxy.star');
     $group->map(['POST','GET'], '/addStar', \ssim\Action\Galaxy\AddStar::class)->setName('galaxy.newStar')->setArgument('permission','GALAXY');
+    $group->map(['POST','GET'], '/star/{id}/addSyst', \ssim\Action\Syst\AddSyst::class)->setName('galaxy.newSyst')->setArgument('permission','GALAXY');
   });
 };

@@ -1,0 +1,30 @@
+<div class="card col-md-6">
+  <div class="card-header">Add A New System to {{star.name}}</div>
+  <div class="card-body">
+    <form action="{{url_for('galaxy.newSyst',{'id':star.id})}}" method="POST">
+      <div class="mb-3 row">
+        <label for="systName" class="col-sm-4 col-form-label">System Name</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="systName" name="name" required>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-4 col-form-label d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Expressed in AU">
+        <span>Distance From Star</span>
+        <i class="fas fa-info-circle"></i></label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="distance" name="distance" required placeholder="1.0">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-4 col-form-label d-flex justify-content-between align-items-center" data-toggle="tooltip" title="Expressed in degrees/day">
+        <span>Orbital Speed</span>
+        <i class="fas fa-info-circle"></i></label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="speed" name="speed" required placeholder="0.25">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success btn-block">Create</button>
+    </form>
+  </div>
+</div>
