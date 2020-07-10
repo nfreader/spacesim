@@ -4,7 +4,7 @@
 #######################################
 
 # How far in the future the game is set
-define('SSIM_YEAR', 178);
+if(!defined('SSIM_YEAR')) define('SSIM_YEAR', 178);
 
 # Base fuel price per unit, in credits
-define('SSIM_FUEL_BASE_COST', 100);
+if(!defined('SSIM_FUEL_BASE_COST')) define('SSIM_FUEL_BASE_COST', 100);
