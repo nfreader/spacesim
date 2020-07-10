@@ -1,7 +1,7 @@
 <?php
 
 namespace ssim\Model;
-use ssim\Model\Model;
+
 
 class Spob extends Model{
 
@@ -14,6 +14,7 @@ class Spob extends Model{
   public $prefix;
   public $postfix;
   public $fullname;
+  public $fuelCost;
 
   public function __construct($spob){
     $this->id = $spob->id;
@@ -23,6 +24,7 @@ class Spob extends Model{
     $this->techlevel = $spob->techlevel;
     $this->desc = $spob->desc;
     $this->getName();
+    $this->fuelCost = $this->fuelCost($this->techlevel, $this->type->fuel_multiplier);
   }
 
   public function getName() {
@@ -40,6 +42,10 @@ class Spob extends Model{
       break;
     }
     $this->fullname = "<i class='fas fa-".$this->type->icon."'></i> $this->prefix $this->name $this->postfix";
+  }
+
+  public function fuelCost(int $techlevel, float $multiplier = 1){
+    return floor(SSIM_FUEL_BASE_COST/$techlevel) * $multiplier;
   }
 
 

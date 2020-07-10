@@ -20,6 +20,7 @@
       <th>Port</th>
       <th>Type</th>
       <th>Techlevel</th>
+      <th>Fuel cost</th>
     </tr>
   </thead>
   <tbody>
@@ -28,10 +29,12 @@
       <td>{{spob.fullname|raw}}</td>
       <td>{{spob.type.name}}</td>
       <td>{{spob.techlevel}}</td>
+      <td>{{spob.fuelCost}} cr/unit</td>
     </tr>
   {% endfor %}
   </tbody>
 </table>
 <hr>
+{{dump(spobs)}}
 {% include ('spob/common/addSpob.twig') %}
 {% endblock %}
