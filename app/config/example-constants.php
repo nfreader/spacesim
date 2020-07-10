@@ -6,9 +6,6 @@ define('SSIM_DEBUG', FALSE);
 # Name of your Space Sim application
 define('SSIM_NAME', 'Space Sim');
 
-# How far in the future the game is set
-define('SSIM_YEAR', 178);
-
 #Timezone. This should probably be left alone.
 define('SSIM_TIMEZONE','UTC');
 

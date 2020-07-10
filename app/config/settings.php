@@ -1,6 +1,6 @@
 <?php
-if(!defined('SSIM_DEBUG')) define('SSIM_DEBUG', FALSE);
-if(!defined('SSIM_ENVIRONMENT')) define('SSIM_ENVIRONMENT', 'PROD');
+if(!defined('SSIM_DEBUG')) define('SSIM_DEBUG', FALSE); //Failsafe
+if(!defined('SSIM_ENVIRONMENT')) define('SSIM_ENVIRONMENT', 'PROD'); //Failsafe
 define('SSIM_DB_DSN', SSIM_DB_METHOD.":host=".SSIM_DB_HOST.";port=".SSIM_DB_PORT.";dbname=".SSIM_DB_NAME);
 $year = date('Y') + SSIM_YEAR;
 return [
@@ -12,10 +12,13 @@ return [
   'application' => [
     'name'  => SSIM_NAME,
     'debug' => SSIM_DEBUG === TRUE ? true : false,
-    'date'  => date("Hi d.m.$year"),
-    'year'  => SSIM_YEAR,
     'timezone' => SSIM_TIMEZONE,
     'version' => SSIM_VERSION
+  ],
+  'game' => [
+    'date'  => date("Hi d.m.$year"),
+    'year'  => SSIM_YEAR,
+    'fuel_base_cost' => SSIM_FUEL_BASE_COST
   ],
   'database' => [
     'DB_METHOD' => SSIM_DB_METHOD,

@@ -83,6 +83,7 @@ return [
     $twigSettings = $config->getArray('twig');
     $twig = Twig::create($twigSettings['template_dir'], $twigSettings);
     $twig->getEnvironment()->addGlobal('app', $config->getArray('application'));
+    $twig->getEnvironment()->addGlobal('game', $config->getArray('game'));
     $twig->addExtension(new \Twig\Extension\DebugExtension());
     $twig->addExtension(new TwigFlash());
     return $twig;
