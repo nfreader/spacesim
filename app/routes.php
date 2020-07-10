@@ -13,9 +13,18 @@ return function (App $app){
   });
 
   $app->group('/galaxy', function (RouteCollectorProxy $group){
+
     $group->get('/', \ssim\Action\Galaxy\ViewGalaxy::class)->setName('galaxy.view');
+
     $group->get('/star/{id}', \ssim\Action\Galaxy\ViewStar::class)->setName('galaxy.star');
+
     $group->map(['POST','GET'], '/addStar', \ssim\Action\Galaxy\AddStar::class)->setName('galaxy.newStar')->setArgument('permission','GALAXY');
+
     $group->map(['POST','GET'], '/star/{id}/addSyst', \ssim\Action\Syst\AddSyst::class)->setName('galaxy.newSyst')->setArgument('permission','GALAXY');
+
+    $group->map(['POST','GET'], '/star/{starid}/{systid}/addSpob', \ssim\Action\Spob\AddSpob::class)->setName('galaxy.newSpob')->setArgument('permission','GALAXY');
+
+    $group->get('/star/{starid}/{systid}', \ssim\Action\Syst\ViewSyst::class)->setName('galaxy.syst');
+
   });
 };
