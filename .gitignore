@@ -1,2 +1,4 @@
 app/config/constants.php
 vendor/
+logs/
+.vscode/
