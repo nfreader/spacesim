@@ -49,7 +49,7 @@ class Star extends Repository{
     $this->types = (new StarTypes())->getTypes();
   }
 
-  public function getGalaxy() {
+  public function getStars() {
     $galaxy = $this->db->run("SELECT s.id, s.name, s.x, s.y, s.type FROM ssim_stars s");
     foreach($galaxy as &$star) {
       $star = new StarModel($star);
@@ -85,7 +85,6 @@ class Star extends Repository{
 
   public function validateData(){
     $this->data = filter_var_array($this->data, $this->filters);
-    var_dump($this->data);
     $valid = true;
     if ('' === $this->data->name) {
       $this->flash->Error("Star must be named!");

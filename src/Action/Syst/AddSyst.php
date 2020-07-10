@@ -41,7 +41,7 @@ final class AddSyst extends ActionHandler{
       }
     }
     return $this->twig->render($response, $this->template, [
-      'galaxy' => $this->star->getGalaxy(),
+      'galaxy' => $this->star->getStars(),
       'starTypes' => $this->types
     ]);
   }

@@ -35,7 +35,7 @@ final class AddStar extends ActionHandler{
       ]);
     }
     return $this->twig->render($response, $this->template, [
-      'galaxy' => $this->star->getGalaxy(),
+      'galaxy' => $this->star->getStars(),
       'starTypes' => $this->types
     ]);
   }
