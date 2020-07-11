@@ -28,13 +28,14 @@
     <tr>
       <td>{{spob.fullname|raw}}</td>
       <td>{{spob.type.name}}</td>
-      <td>{{spob.techlevel}}</td>
-      <td>{{spob.fuelCost}} cr/unit</td>
+      <td>{{spob.techlevel ?? 'N/A'}}</td>
+      <td>{{spob.fuelCost ? spob.fuelCost ~ 'cr/unit' : 'N/A'}}</td>
     </tr>
   {% endfor %}
   </tbody>
 </table>
 <hr>
-{{dump(spobs)}}
-{% include ('spob/common/addSpob.twig') %}
+{% if user.permissions.GALAXY %}
+  {% include ('spob/common/addSpob.twig') %}
+{% endif %}
 {% endblock %}

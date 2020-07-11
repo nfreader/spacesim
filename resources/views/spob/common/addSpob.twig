@@ -14,7 +14,7 @@
           <select id="inputState" class="form-select" name="type" required>
             <option selected disabled>Choose...</option>
             {% for v, t in spobTypes %}
-            <option value="{{v}}">{{t.name}}</option>
+            <option value="{{v}}">{{t.backend_name}}</option>
             {% endfor %}
           </select>
         </div>

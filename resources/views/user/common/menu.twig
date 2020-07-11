@@ -1,15 +1,23 @@
 <div class="list-group">
   <a href="#" class="list-group-item list-group-item-action disabled">
-    <i class="far fa-fw fa-id-card"></i> Manage Your Account
+    <i class="fas fa-fw fa-user-circle"></i> Manage Your Account
+  </a>
+    <a href="{{url_for('pilots.view')}}" class="list-group-item list-group-item-action">
+    <i class="fas fa-fw fa-user-astronaut"></i> Manage Your Pilots
   </a>
   {% if user.permissions.ADMIN %}
-  <a href="#" class="list-group-item list-group-item-action disabled">
-    <i class="fas fa-fw fa-users"></i> Manage Users
-  </a>
+    <a href="#" class="list-group-item list-group-item-action disabled">
+      <i class="fas fa-fw fa-users"></i> User Editor
+    </a>
   {% endif %}
   {% if user.permissions.GALAXY %}
-  <a href="{{url_for('galaxy.view')}}" class="list-group-item list-group-item-action">
-    <i class="fas fa-fw fa-atlas"></i> Manage Galaxy
-  </a>
+    <a href="{{url_for('galaxy.view')}}" class="list-group-item list-group-item-action">
+      <i class="fas fa-fw fa-atlas"></i> Galaxy Editor
+    </a>
+  {% endif %}
+  {% if user.permissions.GOVERNMENT %}
+    <a href="#" class="list-group-item list-group-item-action">
+      <i class="fas fa-fw fa-university"></i> Government Editor
+    </a>
   {% endif %}
 </div>

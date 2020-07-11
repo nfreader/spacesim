@@ -25,6 +25,10 @@ class Spob extends Model{
     $this->desc = $spob->desc;
     $this->getName();
     $this->fuelCost = $this->fuelCost($this->techlevel, $this->type->fuel_multiplier);
+    if('IMPASSABLE' === $this->type->flag) {
+      $this->techlevel = null;
+      $this->fuelCost = null;
+    }
   }
 
   public function getName() {
@@ -39,6 +43,7 @@ class Spob extends Model{
       break;
 
       case 'skip':
+        $this->prefix = null;
       break;
     }
     $this->fullname = "<i class='fas fa-".$this->type->icon."'></i> $this->prefix $this->name $this->postfix";

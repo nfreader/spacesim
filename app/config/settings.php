@@ -35,6 +35,7 @@ return [
     'GOVERNMENTS' => (1<<2),
     'COMMODITIES' => (1<<3),
     'OUTFITS' => (1<<4),
-    'SHIPS' => (1<<5)
+    'SHIPS' => (1<<5),
+    'GOVERNMENT' => (1<<6)
   ]
 ];  
