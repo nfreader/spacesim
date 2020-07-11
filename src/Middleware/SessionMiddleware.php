@@ -9,7 +9,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Response;
 
 use Slim\Views\Twig;
-use ssim\Repository\User;
+use ssim\Aggregate\AggregateUser as User;
 
 /**
  * Session middleware.
@@ -24,7 +24,7 @@ class SessionMiddleware implements MiddlewareInterface {
   }
 
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
-    $this->twig->getEnvironment()->addGlobal('user', $this->user->currentUser);
+    $this->twig->getEnvironment()->addGlobal('user', $this->user->getUser());
     return $handler->handle($request);
   }
 
