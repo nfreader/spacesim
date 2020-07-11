@@ -28,11 +28,22 @@
               <a class="nav-link" href="{{url_for('home')}}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">User Editor</a>
+              <a class="nav-link disabled" href="#">Account</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('galaxy.view')}}">Galaxy Editor</a>
+              <a class="nav-link" href="{{url_for('pilots.view')}}">Pilots</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('galaxy.view')}}">Galaxy</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Governments</a>
+            </li>
+            {% if user.permissions.ADMIN %}
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Users</a>
+            </li>
+            {% endif %}
           </ul>
         </div>
         {% if user %}

@@ -12,6 +12,12 @@ return function (App $app){
     $group->get('/logout', \ssim\Action\Account\Logout::class)->setName('logout');
   });
 
+  $app->group('/pilots', function (RouteCollectorProxy $group){
+    $group->get('/', \ssim\Action\Pilots\ViewPilots::class)->setName('pilots.view');
+    $group->map(['POST','GET'], '/addCompany', \ssim\Action\Pilots\AddCompany::class)->setName('pilots.addCompany');
+    $group->map(['POST','GET'], '/addPilot', \ssim\Action\Pilots\AddPilot::class)->setName('pilots.addPilot');
+  });
+
   $app->group('/galaxy', function (RouteCollectorProxy $group){
 
     $group->get('/', \ssim\Action\Galaxy\ViewGalaxy::class)->setName('galaxy.view');
@@ -26,5 +32,5 @@ return function (App $app){
 
     $group->get('/star/{starid}/{systid}', \ssim\Action\Syst\ViewSyst::class)->setName('galaxy.syst');
 
-  });
+  })->add(ssim\Guard\UserGuard::class);
 };

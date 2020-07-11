@@ -1,0 +1,37 @@
+{% extends 'base/index.html' %}
+{% block page %}
+<h1>{{user.company.name ?? '<em class="text-muted">No company yet!</em>'}}</h1>
+<hr>
+<h2>Pilot Roster</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Credits</th>
+      <th>Legal Rating</th>
+      <th>Location</th>
+      <th>Fingerprint</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pilot in pilots %}
+    <tr>
+      <th>{{pilot.name}}</th>
+      <td>{{pilot.credits}} cr.</td>
+      <td>{{pilot.legal}}</td>
+      <td>{{pilot.location}}</td>
+      <td>{{pilot.fingerprint}}</td>
+    {% else %}
+    <tr>
+      <td class="text-center" colspan="5">≪ No Pilots ≫</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if not pilots or pilots|length < 3 %}
+  {% include 'pilots/common/addPilot.twig' %}
+{% endif %}
+{% if not user.company.id %}
+  {% include 'pilots/common/addCompany.twig' %}
+{% endif %}
+{% endblock %}
