@@ -1,4 +1,7 @@
 app/config/constants.php
 vendor/
 logs/
-.vscode/
+node_modules
+public/assets/css/*
+composer.lock
+resources/views/styles/*.css
