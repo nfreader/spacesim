@@ -3,6 +3,8 @@
 {% if not user %}
   {% include 'forms/account.html' %}
 {% else %}
+  <h1>Logged in as <code>{{user.email}}</code></h1>
+  <hr>
   <div class="row">
     <div class="col-md-6">
     {% include 'user/common/menu.twig' %}
