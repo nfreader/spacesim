@@ -1,0 +1,23 @@
+@use 'inc/colors';
+@use 'layouts/base';
+@use 'elements/buttons';
+@use 'elements/credits';
+@use 'elements/headings';
+@use 'elements/dialog';
+@use 'elements/label';
+@use 'elements/legal';
+@use 'elements/list-group';
+@use 'elements/options-list';
+@import '../fonts/styles.css';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font: 16px/22px 'Fira Code', monospace;;
+}
+
+.tc {
+  text-align: center;
+}

@@ -1,0 +1,49 @@
+@use 'inc/colors' as colors;
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
+  font-family: 'VCROSDMono', monospace;
+  border-bottom: 1px dotted colors.$maincolor;
+}
+
+* > .section-heading:first-child {
+  margin: -10px -10px 10px -10px;
+}
+
+.section-heading {
+  font-size: 26px;
+  line-height: 26px;
+  background: colors.$maincolor;
+  color: colors.$black;
+  padding: 5px 5px 5px 10px;
+  box-shadow: 0 0px 0 2px colors.$maincolor inset, 0 0px 0 3px colors.$black inset;
+  text-transform: UPPERCASE;
+  margin: 10px -10px;
+}
+
+.section-heading.label {
+  padding: 10px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 10px;
+  display: block;
+  margin: -10px -10px 10px -10px;
+  padding: 0 5px;
+  background: colors.$maincolor;
+  color: colors.$black;
+  box-shadow: 0 0px 0 2px colors.$maincolor inset, 0 0px 0 3px colors.$black inset;
+}
+
+.section-heading a,
+.subtitle a {
+  color: colors.$black;
+  text-decoration: none;
+  border-bottom: 1px solid colors.$black;
+}
+
+.section-heading a:hover,
+.subtitle a:hover {
+  border-bottom: none;
+}

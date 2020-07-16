@@ -1,0 +1,53 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header,
+footer {
+  position: fixed;
+  width: 100%;
+  padding: 5px;
+  line-height: 16px;
+  font-family: 'VCROSDMono', monospace;
+  text-transform: UPPERCASE;
+}
+
+header {
+  top: 0;
+}
+
+footer { 
+  bottom: 0;
+}
+
+#game {
+  position: fixed;
+  top: 30px;
+  bottom: 30px;
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  
+}
+
+#sidebar, 
+#main {
+  border-width: 1px;
+  border-style: solid;
+  padding: 10px;
+  overflow-y: scroll;
+}
+
+#sidebar {
+  margin-right: 5px;
+  width: 30%;
+}
+#main {
+  flex-grow: 1;
+}

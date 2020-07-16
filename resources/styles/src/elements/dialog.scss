@@ -1,0 +1,19 @@
+@use '../inc/colors';
+.dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.dialog-body {
+  width: 75%;
+  min-height: 25%;
+  border: 1px solid colors.$maincolor;
+  padding: 10px;
+}
+
+.dialog-body.narrow {
+  width: 25%;
+}
