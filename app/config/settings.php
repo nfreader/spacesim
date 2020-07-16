@@ -1,7 +1,7 @@
 <?php
 if(!defined('SSIM_DEBUG')) define('SSIM_DEBUG', FALSE); //Failsafe
 if(!defined('SSIM_ENVIRONMENT')) define('SSIM_ENVIRONMENT', 'PROD'); //Failsafe
-define('SSIM_DB_DSN', SSIM_DB_METHOD.":host=".SSIM_DB_HOST.";port=".SSIM_DB_PORT.";dbname=".SSIM_DB_NAME);
+define('SSIM_DB_DSN', SSIM_DB_METHOD.":host=".SSIM_DB_HOST.";port=".SSIM_DB_PORT.";dbname=".SSIM_DB_NAME.";charset=utf8mb4");
 $year = date('Y') + SSIM_YEAR;
 return [
   "twig" => [
