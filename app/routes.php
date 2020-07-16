@@ -6,6 +6,8 @@ use Slim\Routing\RouteCollectorProxy;
 return function (App $app){
   $app->get('/', \ssim\Action\Home::class)->setName('home');
   
+  $app->map(['GET', 'POST'],'/game', \ssim\Action\Game\LaunchGame::class)->setName('game');
+
   $app->group('/account', function (RouteCollectorProxy $group){
     $group->post('/register', \ssim\Action\Account\Register::class)->setName('register');
     $group->post('/login', \ssim\Action\Account\Login::class)->setName('login');

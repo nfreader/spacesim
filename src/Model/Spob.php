@@ -20,7 +20,7 @@ class Spob extends Model{
     $this->id = $spob->id;
     $this->name = $spob->name;
     $this->syst = $spob->syst;
-    $this->type = (object) constant("ssim\Data\SpobTypes::$spob->type");
+    $this->type = json_decode(json_encode(constant("ssim\Data\SpobTypes::$spob->type")));
     $this->techlevel = $spob->techlevel;
     $this->desc = $spob->desc;
     $this->getName();

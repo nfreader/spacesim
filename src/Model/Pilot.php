@@ -2,6 +2,8 @@
 
 namespace ssim\Model;
 
+use ssim\Data\IndieGovt;
+
 class Pilot {
 
   public $id;
@@ -15,6 +17,7 @@ class Pilot {
   public $star;
   public $syst;
   public $spob;
+  public $govt;
 
   public function __construct($pilot){
     $this->id = $pilot->id;
@@ -28,11 +31,19 @@ class Pilot {
     $this->syst = $pilot->syst;
     $this->spob = $pilot->spob;
     $this->location = $this->setLocation();
+    $this->govt = $this->getGovt($pilot->govt);
   }
 
   private function setLocation(){
-    if(!$syst && !$spob){
-      return "Lost in space!";
+    if($this->spob && $this->syst) {
+      return ucfirst($this->spob->type->verbs->land->past." ".$this->spob->fullname);
+    }
+    return "Lost in space!";
+  }
+
+  private function getGovt(?object $govt = null){
+    if(!$govt){
+      return new IndieGovt();
     }
   }
 

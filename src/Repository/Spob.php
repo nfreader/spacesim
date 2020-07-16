@@ -69,6 +69,11 @@ class Spob {
     return $spobs;
   }
 
+  public function getSpob(int $id) {
+    $spob = $this->db->row("SELECT s.id, s.name, s.syst, s.techlevel, s.type, s.desc FROM ssim_spobs s WHERE s.id = ?", $id);
+    return new SpobModel($spob);
+  }
+
   public function addNew($data) {
     $this->data = $data;
     if(!$this->validateData()){

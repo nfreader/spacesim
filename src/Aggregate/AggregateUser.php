@@ -17,6 +17,7 @@ class AggregateUser {
 
   public function getUser(){
     $user = $this->user->currentUser;
+    if(!$user) return false;
     $user->company = $this->company->getUserCompany($user->getId());
     return $user;
   }

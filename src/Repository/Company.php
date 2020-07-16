@@ -68,7 +68,7 @@ class Company {
   }
 
   public function getUserCompany(){
-    return new CompanyModel($this->db->row("SELECT c.id, c.name FROM ssim_companies c WHERE c.user = ?", $this->user->currentUser->getId()));
+    return new CompanyModel($this->db->row("SELECT c.id, c.name, c.homeworld FROM ssim_companies c WHERE c.user = ?", $this->user->currentUser->getId()));
   }
 
 }

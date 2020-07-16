@@ -2,7 +2,7 @@
 {% block page %}
 <h1>{{user.company.name ?? '<em class="text-muted">No company yet!</em>'}}</h1>
 <hr>
-<h2>Pilot Roster</h2>
+<h2>Corporate Pilot Roster</h2>
 <table class="table">
   <thead>
     <tr>
@@ -11,6 +11,7 @@
       <th>Legal Rating</th>
       <th>Location</th>
       <th>Fingerprint</th>
+      <th>Launch</th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +22,12 @@
       <td>{{pilot.legal}}</td>
       <td>{{pilot.location}}</td>
       <td>{{pilot.fingerprint}}</td>
+      <td>
+        <form method="post" action="{{url_for('game')}}">
+          <input name="pilot" type="hidden" value="{{pilot.id}}" />
+          <button class="btn btn-link"><i class="fas fa-external-link-alt"></i> Launch!</button>
+        </form>
+      </td>
     {% else %}
     <tr>
       <td class="text-center" colspan="5">≪ No Pilots ≫</td>
