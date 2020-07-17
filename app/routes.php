@@ -5,7 +5,7 @@ use Slim\Routing\RouteCollectorProxy;
 
 return function (App $app){
   $app->get('/', \ssim\Action\Home::class)->setName('home');
-  
+
   $app->map(['GET', 'POST'],'/game', \ssim\Action\Game\LaunchGame::class)->setName('game');
 
   $app->group('/account', function (RouteCollectorProxy $group){
@@ -18,6 +18,11 @@ return function (App $app){
     $group->get('/', \ssim\Action\Pilots\ViewPilots::class)->setName('pilots.view');
     $group->map(['POST','GET'], '/addCompany', \ssim\Action\Pilots\AddCompany::class)->setName('pilots.addCompany');
     $group->map(['POST','GET'], '/addPilot', \ssim\Action\Pilots\AddPilot::class)->setName('pilots.addPilot');
+  });
+
+  $app->group('/ships', function (RouteCollectorProxy $group){
+    $group->get('/', \ssim\Action\Ships\ViewShips::class)->setName('ships.view');
+    $group->map(['POST','GET'], '/addNew', \ssim\Action\Ships\AddShip::class)->setName('ships.newShip');
   });
 
   $app->group('/galaxy', function (RouteCollectorProxy $group){

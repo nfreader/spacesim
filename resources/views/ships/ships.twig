@@ -1,0 +1,26 @@
+{% extends 'base/index.html' %}
+{% block page %}
+<h1>Shipyard</h1>
+<hr>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Fuel</th>
+      <th>Cargo Capacity</th>
+      <th>Turn/Accel</th>
+      <th>Mass</th>
+      <th>Armor</th>
+      <th>Shields</th>
+      <th>Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+{% if not ships %}
+<tr><td colspan="8" class="text-center">≪ No Ships ≫</td></tr>
+{% endif %}
+</tbody>
+</table>
+<hr>
+{% include 'ships/addShip.twig' %}
+{% endblock %}

@@ -15,6 +15,11 @@
       <i class="fas fa-fw fa-atlas"></i> Galaxy Editor
     </a>
   {% endif %}
+  {% if user.permissions.SHIPS %}
+    <a href="{{url_for('ships.view')}}" class="list-group-item list-group-item-action">
+      <i class="fas fa-fw fa-space-shuttle"></i> Ship Editor
+    </a>
+  {% endif %}
   {% if user.permissions.GOVERNMENT %}
     <a href="#" class="list-group-item list-group-item-action">
       <i class="fas fa-fw fa-university"></i> Government Editor
