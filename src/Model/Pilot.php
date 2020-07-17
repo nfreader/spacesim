@@ -35,8 +35,10 @@ class Pilot {
   }
 
   private function setLocation(){
-    if($this->spob && $this->syst) {
+    if(is_object($this->spob) && is_object($this->syst)) {
       return ucfirst($this->spob->type->verbs->land->past." ".$this->spob->fullname);
+    } else if ($this->spob && $this->syst){
+      return "$this->spob in the $this->syst system";
     }
     return "Lost in space!";
   }

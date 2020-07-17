@@ -10,19 +10,17 @@
       <th>Credits</th>
       <th>Legal Rating</th>
       <th>Location</th>
-      <th>Fingerprint</th>
       <th>Launch</th>
     </tr>
   </thead>
   <tbody>
     {% for pilot in pilots %}
     <tr>
-      <th>{{pilot.name}}</th>
-      <td>{{pilot.credits}} cr.</td>
-      <td>{{pilot.legal}}</td>
-      <td>{{pilot.location}}</td>
-      <td>{{pilot.fingerprint}}</td>
-      <td>
+      <th class="align-middle">{{pilot.name}}<br><small>{{pilot.fingerprint}}</small></th>
+      <td class="align-middle">{{pilot.credits}} cr.</td>
+      <td class="align-middle">{{pilot.legal}}</td>
+      <td class="align-middle">{{pilot.location}}</td>
+      <td class="align-middle">
         <form method="post" action="{{url_for('game')}}">
           <input name="pilot" type="hidden" value="{{pilot.id}}" />
           <button class="btn btn-link"><i class="fas fa-external-link-alt"></i> Launch!</button>

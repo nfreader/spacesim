@@ -37,7 +37,7 @@ class Pilot {
   }
 
   public function getUserPilots(){
-    return $this->getPilotsForUser($this->user->currentUser->getId());
+    return $this->getPilotList($this->user->currentUser->getId());
   }
 
   public function getPilotsForUser(int $user) {
@@ -52,6 +52,27 @@ class Pilot {
     p.spob,
     p.fingerprint
     FROM ssim_pilots p
+    WHERE p.user = ?", $user);
+    foreach ($pilots as &$pilot){
+      $pilot = new PilotModel($pilot);
+    }
+    return $pilots;
+  }
+
+  public function getPilotList(int $user){
+    $pilots = $this->db->run("SELECT
+    p.id,
+    p.name,
+    p.credits,
+    p.legal,
+    p.star,
+    y.name as syst,
+    p.govt,
+    b.name as spob,
+    p.fingerprint
+    FROM ssim_pilots p
+    LEFT JOIN ssim_spobs b ON p.spob = b.id
+    LEFT JOIN ssim_systs y ON p.syst = y.id
     WHERE p.user = ?", $user);
     foreach ($pilots as &$pilot){
       $pilot = new PilotModel($pilot);
