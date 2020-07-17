@@ -2,9 +2,12 @@
 
 namespace ssim\Repository;
 
+use ParagonIE\EasyDB\EasyDB as DB;
+
 class Audit extends Repository {
 
-  public function __constuct(){
+  public function __constuct(DB $db){
+    $this->db = $db;
   }
 
   public function addNew(string $action, string $text){

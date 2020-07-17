@@ -8,7 +8,7 @@ use ssim\Notification\Flash;
 class Repository {
 
   protected $db;
-  public $flash;
+  protected $flash;
 
   public function __construct(DB $db, Flash $flash, User $user) {
     $this->db = $db;
