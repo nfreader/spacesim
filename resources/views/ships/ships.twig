@@ -6,19 +6,33 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Fuel</th>
+      <th>Fuel Units</th>
       <th>Cargo Capacity</th>
-      <th>Turn/Accel</th>
+      <th>Expansion Space</th>
+      <th>Turn<br>Accel</th>
       <th>Mass</th>
-      <th>Armor</th>
-      <th>Shields</th>
+      <th>Shields<br>Armor</th>
       <th>Cost</th>
     </tr>
   </thead>
   <tbody>
-{% if not ships %}
+{% for ship in ships %}
+  <tr>
+    <td class="align-middle"><strong>{{ship.name}}</strong> <small>{{ship.class.long}}<br>{{ship.shipwright}} </small></td>
+    <td class="align-middle">{{ship.fueltank}} units</th>
+    <td class="align-middle">{{ship.cargobay}} tons</td>
+    <td class="align-middle">{{ship.expansion}} tons</td>
+    <td class="align-middle">{{ship.turn}}˚/sec<br>{{ship.accel}} m/s<sup>2</sup></td>
+    <td class="align-middle">{{ship.mass}} tons</td>
+    <td class="align-middle">{{ship.shields}}<br>{{ship.armor}}</td>
+    <td class="align-middle">{{ship.cost}}cr.</td>
+  </tr>
+  <tr class="border-bottom border-dark">
+    <td colspan="8">{{ship.desc}}</td>
+  </tr>
+{% else %}
 <tr><td colspan="8" class="text-center">≪ No Ships ≫</td></tr>
-{% endif %}
+{% endfor %}
 </tbody>
 </table>
 <hr>

@@ -29,8 +29,8 @@ class Ship {
     $this->mass = $ship->mass;
     $this->shields = $ship->shields;
     $this->armor = $ship->armor;
-    $this->class = $ship->class;
-    $this->cost = $ship->cost;
+    $this->class = json_decode(json_encode(constant("ssim\Data\ShipTypes::$ship->class")));
+    $this->cost = number_format($ship->cost);
     $this->desc = $ship->desc;
   }
 

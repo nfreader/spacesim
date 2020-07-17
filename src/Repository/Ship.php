@@ -8,6 +8,8 @@ use ssim\Notification\Flash;
 use ssim\Repository\Audit;
 use ssim\Repository\Repository;
 
+use ssim\Model\Ship as ShipModel;
+
 class Ship extends Repository {
 
   public $filters = [
@@ -98,6 +100,29 @@ class Ship extends Repository {
     $this->db = $db;
     $this->flash = $flash;
     $this->audit = $audit;
+  }
+
+  public function getShipyard() {
+    $ships = $this->db->run("SELECT s.id, 
+    s.name,
+    s.shipwright,
+    s.fueltank,
+    s.cargobay,
+    s.expansion,
+    s.accel,
+    s.turn,
+    s.mass,
+    s.shields,
+    s.armor,
+    s.class,
+    s.cost,
+    s.desc,
+    s.starter
+    FROM ssim_ships s");
+    foreach ($ships as &$ship){
+      $ship = new ShipModel($ship);
+    }
+    return $ships;
   }
 
   public function addNew($data) {

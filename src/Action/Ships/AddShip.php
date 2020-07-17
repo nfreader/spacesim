@@ -25,7 +25,8 @@ final class AddShip {
     $data = $this->ship->addNew($request->getParsedBody());
     return $this->twig->render($response, 'ships/ships.twig', [
       'shiptypes' => (new ShipTypes())->getTypes(),
-      'data' => $data
+      'data' => $data,
+      'ships' => $this->ship->getShipyard()
     ]);
   }
 }
