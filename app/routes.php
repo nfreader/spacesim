@@ -50,4 +50,12 @@ return function (App $app){
     $group->get('/star/{starid}/{systid}', \ssim\Controllers\Http\Syst\ViewSyst::class)->setName('galaxy.syst');
 
   })->add(ssim\Guard\UserGuard::class);
+
+  //JSON API endpoints
+  $app->group('/api', function (RouteCollectorProxy $group){
+
+    $group->get('/ships[/{id}]', \ssim\Controllers\Json\Ship\ViewShips::class);
+
+  });
+
 };
