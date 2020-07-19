@@ -8,7 +8,7 @@ use Slim\Http\ServerRequest;
 
 use Slim\Views\Twig;
 
-use ssim\Action\ActionHandler;
+use ssim\Controllers\Http\ActionHandler;
 
 final class Logout extends ActionHandler{
 

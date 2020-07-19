@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 
-use ssim\Action\ActionHandler;
+use ssim\Controllers\Http\ActionHandler;
 
 use Slim\Views\Twig;
 use ssim\Repository\Star;
