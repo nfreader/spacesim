@@ -4,6 +4,7 @@ namespace ssim\Model;
 
 class Ship {
 
+  public $id;
   public $name;
   public $shipwright;
   public $fueltank;
@@ -17,8 +18,10 @@ class Ship {
   public $class;
   public $cost;
   public $desc;
+  public $starter;
 
   public function __construct($ship) {
+    $this->id = $ship->id;
     $this->name = $ship->name;
     $this->shipwright = $ship->shipwright;
     $this->fueltank = $ship->fueltank;
@@ -32,6 +35,7 @@ class Ship {
     $this->class = json_decode(json_encode(constant("ssim\Data\ShipTypes::$ship->class")));
     $this->cost = number_format($ship->cost);
     $this->desc = $ship->desc;
+    $this->starter = (bool) $ship->starter;
   }
 
 }
