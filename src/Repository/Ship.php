@@ -125,6 +125,28 @@ class Ship extends Repository {
     return $ships;
   }
 
+  public function getShip(int $id) {
+    $ship = $this->db->row("SELECT s.id, 
+    s.name,
+    s.shipwright,
+    s.fueltank,
+    s.cargobay,
+    s.expansion,
+    s.accel,
+    s.turn,
+    s.mass,
+    s.shields,
+    s.armor,
+    s.class,
+    s.cost,
+    s.desc,
+    s.starter
+    FROM ssim_ships s
+    WHERE s.id = ?", $id);
+    if(!$ship) return "This ship does not exist";
+    return new ShipModel($ship);
+  }
+
   public function addNew($data) {
     $this->data = $data;
     if(!$this->validateData()) return false;
