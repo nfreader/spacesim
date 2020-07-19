@@ -1,6 +1,6 @@
 <?php
 
-namespace ssim\Action\Galaxy;
+namespace ssim\Controllers\Http\Syst;
 
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
@@ -13,12 +13,13 @@ use Slim\Views\Twig;
 use ssim\Repository\Star;
 use ssim\Repository\Syst;
 
-final class ViewStar extends ActionHandler{
+final class AddSyst extends ActionHandler{
   
   private $template = 'star/view.twig';
 
-  private $star;
   private $twig;
+  private $star;
+  private $syst;
 
   public function __construct(Twig $twig, Star $star, Syst $syst) {
     $this->twig = $twig;
@@ -29,17 +30,19 @@ final class ViewStar extends ActionHandler{
   public function __invoke(ServerRequest $request, Response $response, $args): 
   ResponseInterface {
     $id = \filter_var($args['id'], FILTER_VALIDATE_INT);
-    if($star = $this->star->getStar($id)) {
-      $systs = $this->syst->getSysts($id, TRUE);
-      return $this->twig->render($response, $this->template, [
-        'star' => $star,
-        'systs' => $systs
-        // 'galaxy' => $this->star->getStar(),
-      ]);
+    if('POST' === $request->getMethod()) {
+      $payload = $request->getParsedBody();
+      $payload['star'] = $id;
+      $this->syst->addNew($payload);
+      if($star = $this->star->getStar($id)) {
+        return $this->twig->render($response, $this->template,[
+          'star' => $star
+        ]);
+      }
     }
-    return $this->twig->render($response, 'base/error.twig', [
-      'star' => $star
-      // 'galaxy' => $this->star->getStar(),
+    return $this->twig->render($response, $this->template, [
+      'galaxy' => $this->star->getStars(),
+      'starTypes' => $this->types
     ]);
   }
 }

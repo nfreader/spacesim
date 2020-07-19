@@ -1,6 +1,6 @@
 <?php
 
-namespace ssim\Action\Spob;
+namespace ssim\Controllers\Http\Syst;
 
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
@@ -10,31 +10,28 @@ use ssim\Action\ActionHandler;
 
 use Slim\Views\Twig;
 
-use ssim\Repository\Spob;
 use ssim\Repository\Syst;
+use ssim\Repository\Spob;
 
 use ssim\Data\SpobTypes;
 
-final class AddSpob extends ActionHandler{
+final class ViewSyst extends ActionHandler{
   
   private $template = 'syst/view.twig';
 
-  private $spob;
+  private $syst;
   private $twig;
 
-  public function __construct(Twig $twig, Spob $spob, Syst $syst) {
+  public function __construct(Twig $twig, Syst $syst, Spob $spob) {
     $this->twig = $twig;
-    $this->spob = $spob;
     $this->syst = $syst;
+    $this->spob = $spob;
   }
 
   public function __invoke(ServerRequest $request, Response $response, $args): 
   ResponseInterface {
-    $payload = $request->getParsedBody();
-    $payload['syst'] = \filter_var($args['systid'], FILTER_VALIDATE_INT);
-    $payload['star'] = \filter_var($args['starid'], FILTER_VALIDATE_INT);
-    $this->spob->addNew($payload);
-    if($syst = $this->syst->getSyst($payload['syst'], TRUE)) {
+    $systid = \filter_var($args['systid'], FILTER_VALIDATE_INT);
+    if($syst = $this->syst->getSyst($systid, TRUE)) {
       return $this->twig->render($response, $this->template, [
         'star' => $syst->star,
         'syst' => $syst,

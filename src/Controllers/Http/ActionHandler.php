@@ -1,6 +1,6 @@
 <?php
 
-namespace ssim\Action;
+namespace ssim\Controllers\Http;
 
 
 class ActionHandler {

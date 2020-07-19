@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace ssim\Action\Game;
+namespace ssim\Controllers\Http\Pilots;
 
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
@@ -10,20 +10,20 @@ use Slim\Views\Twig;
 
 use ssim\Repository\Pilot;
 
-class LaunchGame {
+final class AddPilot {
 
   protected $twig;
   protected $pilot;
 
-  public function __construct(Twig $twig, Pilot $pilot){
+  public function __construct(Twig $twig, Pilot $pilot) {
     $this->twig = $twig;
     $this->pilot = $pilot;
   }
 
   public function __invoke(ServerRequest $request, Response $response): ResponseInterface {
-    $data = $request->getParsedBody();
-    return $this->twig->render($response, 'base/game.html',[
-      'pilot' => $this->pilot->launchPilot($data['pilot'])
+    $this->pilot->addNew($request->getParsedBody());
+    return $this->twig->render($response, 'pilots/view.twig',[
+      'pilots' => $this->pilot->getUserPilots()
     ]);
   }
 }

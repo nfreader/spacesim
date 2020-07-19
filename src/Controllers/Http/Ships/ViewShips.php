@@ -1,6 +1,6 @@
 <?php
 
-namespace ssim\Action\Ships;
+namespace ssim\Controllers\Http\Ships;
 
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
@@ -8,13 +8,13 @@ use Slim\Http\ServerRequest;
 
 use Slim\Views\Twig;
 
+use ssim\Data\ShipTypes;
 use ssim\Repository\Ship;
 
-use ssim\Data\ShipTypes;
+final class ViewShips {
 
-final class AddShip {
-
-  private $twig;
+  protected $twig;
+  protected $ship;
 
   public function __construct(Twig $twig, Ship $ship) {
     $this->twig = $twig;
@@ -22,10 +22,8 @@ final class AddShip {
   }
 
   public function __invoke(ServerRequest $request, Response $response): ResponseInterface {
-    $data = $this->ship->addNew($request->getParsedBody());
     return $this->twig->render($response, 'ships/ships.twig', [
       'shiptypes' => (new ShipTypes())->getTypes(),
-      'data' => $data,
       'ships' => $this->ship->getShipyard()
     ]);
   }

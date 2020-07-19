@@ -1,6 +1,6 @@
 <?php
 
-namespace ssim\Action\Account;
+namespace ssim\Controllers\Http\Account;
 
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;

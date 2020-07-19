@@ -1,6 +1,6 @@
 <?php
 
-namespace ssim\Action\Galaxy;
+namespace ssim\Controllers\Http\Galaxy;
 
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
