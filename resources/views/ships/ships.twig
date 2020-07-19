@@ -18,7 +18,7 @@
   <tbody>
 {% for ship in ships %}
   <tr>
-    <td class="align-middle"><strong>{{ship.name}}</strong> <small>{{ship.class.long}}<br>{{ship.shipwright}} </small></td>
+    <td class="align-middle"><strong>{{ship.name}}</strong> <small>{{ship.class.long}}<br>{{ship.shipwright}} {% if ship.starter %}<span class="badge bg-success">Starter</span>{% endif %}</small></td>
     <td class="align-middle">{{ship.fueltank}} units</th>
     <td class="align-middle">{{ship.cargobay}} tons</td>
     <td class="align-middle">{{ship.expansion}} tons</td>
