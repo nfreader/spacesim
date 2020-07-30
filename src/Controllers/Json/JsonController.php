@@ -16,17 +16,17 @@ abstract class JsonController {
 
     try {
       return $this->action();
-    } catch (DomainRecordNotFoundException $e) {
+    } catch (Exception $e) {
       throw new HttpNotFoundException($this->request, $e->getMessage());
     }
   }
 
-  protected function respond($data): Response {
+  protected function respond($data, $code = 200): Response {
     $json = json_encode($data, JSON_PRETTY_PRINT);
     $this->response->getBody()->write($json);
 
-    return $this->response->withHeader('Content-Type', 'application/json');
-                // ->withStatus($payload->getStatusCode());
+    return $this->response->withHeader('Content-Type', 'application/json')
+      ->withStatus($code);
   }
   
   protected function resolveArg(string $name){
@@ -44,5 +44,15 @@ abstract class JsonController {
   }
 
   abstract protected function action(): Response;
+
+  protected function getFormData() {
+    $input = json_decode(file_get_contents('php://input'));
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new HttpBadRequestException($this->request, 'Malformed JSON input.');
+    }
+
+    return $input;
+  }
 
 }

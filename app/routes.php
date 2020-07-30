@@ -51,10 +51,29 @@ return function (App $app){
 
   })->add(ssim\Guard\UserGuard::class);
 
+  $app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+  });
+
+  $app->add(function ($request, $handler) {
+      $response = $handler->handle($request);
+      return $response
+              ->withHeader('Access-Control-Allow-Origin', '*')
+              ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+              ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  });
+
   //JSON API endpoints
   $app->group('/api', function (RouteCollectorProxy $group){
 
+    $group->post('/user/auth', \ssim\Controllers\Json\User\AuthenticateUser::class);
+
+    $group->get('/game/info', \ssim\Controllers\Json\Game\GetInfo::class);
+
     $group->get('/ships[/{id}]', \ssim\Controllers\Json\Ship\ViewShips::class);
+
+    $group->get('/pilot', \ssim\Controllers\Json\Pilot\GetActivePilot::class);
+
 
   });
 

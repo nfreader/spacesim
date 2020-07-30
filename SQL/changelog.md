@@ -3,6 +3,23 @@
 The current schema version is `1.2`. Please be sure to update this file with any changes as you make them.
 
 ---
+## [1.3] - 2020-07-08 nfreader \<nick@nfreader.net\>
+
+Added a unique index constraint to `ssim_stars.name`. Removed `ssim_stars.creator` column and foreign relations.
+
+```
+ALTER TABLE `ssim_stars` ADD UNIQUE INDEX (`name`);
+```
+```
+ALTER TABLE `ssim_stars` DROP FOREIGN KEY `ssim_stars_ibfk_1`;
+ALTER TABLE `ssim_stars` DROP `creator`;
+```
+
+```
+UPDATE `ssim_sql_version` SET `version_major` = 1, `version_minor` = 3;
+```
+
+---
 ## [1.2] - 2020-07-07 nfreader \<nick@nfreader.net\>
 
 Added `ssim_stars` and `ssim_audit`. Both have foreign relations to `ssim_users.id`.

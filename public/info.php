@@ -1,3 +1,2 @@
 <?php
-xdebug_break();
-phpinfo(); ?>
+var_dump((new DateTime())->add(new DateInterval('P01D')));

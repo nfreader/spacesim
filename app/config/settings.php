@@ -16,6 +16,8 @@ return [
     'version' => SSIM_VERSION
   ],
   'game' => [
+    'name'  => SSIM_NAME,
+    'version' => SSIM_VERSION,
     'date'  => date("Hi d.m.$year"),
     'year'  => SSIM_YEAR,
     'fuel_base_cost' => SSIM_FUEL_BASE_COST

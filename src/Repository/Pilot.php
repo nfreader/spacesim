@@ -118,6 +118,7 @@ class Pilot {
       }
       return false;
     }
+    if(!$pilot->id) return false;
     $pilot->company = $this->user->currentUser->company;
     if($pilot->spob){
       $pilot->spob = $this->spob->getSpob($pilot->spob);
@@ -126,6 +127,10 @@ class Pilot {
       $pilot->syst = $this->syst->getSyst($pilot->syst);
     }
     return new PilotModel($pilot);
+  }
+
+  public function getActivePilot(){
+    return $this->getPilot($_SESSION[SSIM_IDENT]['activePilot']);
   }
 
   public function addNew($data) {

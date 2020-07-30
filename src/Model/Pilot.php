@@ -32,6 +32,8 @@ class Pilot {
     $this->spob = $pilot->spob;
     $this->location = $this->setLocation();
     $this->govt = $this->getGovt($pilot->govt);
+    $this->vessel = null;
+    $this->ship = null;
   }
 
   private function setLocation(){

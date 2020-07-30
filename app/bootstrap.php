@@ -10,6 +10,8 @@ require_once(__DIR__ . '/config/version.php');
 require_once(__DIR__ . '/session.php');
 require_once(__DIR__ . '/config/game.php');
 
+if(SSIM_DEBUG) header('Access-Control-Allow-Origin: *');
+
 date_default_timezone_set(SSIM_TIMEZONE);
 
 $containerBuilder = new ContainerBuilder();
