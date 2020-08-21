@@ -1,6 +1,7 @@
 <?php
 if(!defined('SSIM_DEBUG')) define('SSIM_DEBUG', FALSE); //Failsafe
 if(!defined('SSIM_ENVIRONMENT')) define('SSIM_ENVIRONMENT', 'PROD'); //Failsafe
+if(!defined('SSIM_SECRET_KEY')) define('SSIM_SECRET_KEY', FALSE);
 define('SSIM_DB_DSN', SSIM_DB_METHOD.":host=".SSIM_DB_HOST.";port=".SSIM_DB_PORT.";dbname=".SSIM_DB_NAME.";charset=utf8mb4");
 $year = date('Y') + SSIM_YEAR;
 return [
@@ -39,5 +40,6 @@ return [
     'OUTFITS' => (1<<4),
     'SHIPS' => (1<<5),
     'GOVERNMENT' => (1<<6)
-  ]
+  ],
+  'secret_key' => SSIM_SECRET_KEY
 ];  
