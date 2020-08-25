@@ -4,14 +4,25 @@ namespace ssim\Repository;
 
 use ParagonIE\EasyDB\EasyDB as DB;
 
+use ParagonIE\Paseto\Keys\{
+  AsymmetricSecretKey,
+  SymmetricKey    
+};
+
+use ParagonIE\Paseto\Builder;
+use ParagonIE\Paseto\Purpose;
+use ParagonIE\Paseto\Protocol\Version2;
+
 use ssim\Model\User as UserModel;
 use ssim\Repository\Permissions;
+use ssim\Repository\Company;
+use ssim\Repository\SecretKey;
 
 class User {
 
   private $db;
   private $permissons;
-
+  private $secretKey;
   private $fields = [
     'email',
     'password',
@@ -21,9 +32,10 @@ class User {
 
   public $currentUser = [];
 
-  public function __construct(DB $db, Permissions $permissions) {
+  public function __construct(DB $db, Permissions $permissions, Secretkey $key) {
     $this->db = $db;
     $this->permissions = $permissions;
+    $this->key = $key;
     if($_SESSION[SSIM_IDENT] && isset($_SESSION[SSIM_IDENT]['user'])){
       $this->currentUser = $this->getCurrentUser();
     }
@@ -41,6 +53,14 @@ class User {
     }
     
     return false;
+  }
+
+  public function ApiLogin($email, $password) {
+    $user = $this->login($email, $password);
+    $token = new Token($this->key);
+    $token = $token->generateToken(['hello'=>'world']);
+    $user->token = $token;
+    return $user;
   }
 
   public function addNew($email, $password) {
@@ -100,6 +120,11 @@ class User {
 
   private function generateActivationKey(){
     return bin2hex(openssl_random_pseudo_bytes(16));
+  }
+
+  public function whoAmI($providedToken) {
+    $token = new Token($this->key);
+    $token->decryptToken($providedToken);
   }
 
 }

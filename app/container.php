@@ -7,6 +7,7 @@ use Slim\App;
 use Slim\Factory\AppFactory;
 use Slim\Interfaces\RouteParserInterface;
 use Slim\Psr7\Factory\UriFactory;
+
 use Selective\Config\Configuration;
 
 use function DI\autowire;
@@ -88,5 +89,13 @@ return [
     $twig->addExtension(new TwigFlash());
     return $twig;
   },
+
+  // //Secret Key
+  // SecretKey::class => function(ContainerInterface $container) {
+  //   $config = $container->get(Configuration::class);
+  //   $sk = new SecretKey($config);
+  //   var_dump($sk);
+  //   return $sk->key;
+  // },
 
 ];

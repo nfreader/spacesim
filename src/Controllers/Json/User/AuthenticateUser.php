@@ -9,8 +9,8 @@ class AuthenticateUser extends UserController {
 
   public function action(): Response {
     $credentials = $this->getFormData();
-    $user = $this->user->login($credentials->email, $credentials->password);
-    return $this->respond($user);
+    $user = $this->user->ApiLogin($credentials->email, $credentials->password);
+    return $this->respondWithData($user);
   }
 
 }

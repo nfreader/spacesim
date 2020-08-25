@@ -6,7 +6,6 @@ use Paragonie\EasyDB\EasyDB as DB;
 
 use ssim\Repository\Audit;
 use ssim\Notification\Flash;
-use ssim\Repository\User;
 
 use ssim\Model\Company as CompanyModel;
 
@@ -15,7 +14,6 @@ class Company {
   protected $db;
   protected $audit;
   protected $flash;
-  protected $user;
 
   private $filters = [
     'name' => [
@@ -24,11 +22,10 @@ class Company {
     ],
   ];
 
-  public function __construct(DB $db, Audit $audit, Flash $flash, User $user){
+  public function __construct(DB $db, Audit $audit, Flash $flash){
     $this->db = $db;
     $this->audit = $audit;
     $this->flash = $flash;
-    $this->user = $user;
   }
 
   public function addNew($data) {
@@ -63,12 +60,12 @@ class Company {
       $this->flash->Error("Company name is invalid!");
       $valid = false;
     }
-    $this->data['user'] = $this->user->currentUser->getId();
+    $this->data['user'] = $_SESSION[SSIM_IDENT]['user'];
     return $valid;
   }
 
-  public function getUserCompany(){
-    return new CompanyModel($this->db->row("SELECT c.id, c.name, c.homeworld FROM ssim_companies c WHERE c.user = ?", $this->user->currentUser->getId()));
+  public function getUserCompany($user){
+    return new CompanyModel($this->db->row("SELECT c.id, c.name, c.homeworld FROM ssim_companies c WHERE c.user = ?", $user));
   }
 
 }

@@ -10,7 +10,7 @@ use Selective\Config\Configuration as Config;
 class Permissions extends Repository {
 
   protected $db;
-  private $config;
+  protected $config;
 
   private $flags;
 

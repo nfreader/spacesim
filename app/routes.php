@@ -7,6 +7,8 @@ return function (App $app){
   // BACKEND 
   $app->get('/', \ssim\Controllers\Http\Home::class)->setName('home');
 
+  $app->get('/test', \ssim\Controllers\Http\Test\TestController::class);
+
   $app->map(['GET', 'POST'],'/game', \ssim\Controllers\Http\Game\LaunchGame::class)->setName('game');
 
   $app->group('/account', function (RouteCollectorProxy $group){
@@ -67,6 +69,7 @@ return function (App $app){
   $app->group('/api', function (RouteCollectorProxy $group){
 
     $group->post('/user/auth', \ssim\Controllers\Json\User\AuthenticateUser::class);
+    $group->post('/user/whoami', \ssim\Controllers\Json\User\WhoAmI::class);
 
     $group->get('/game/info', \ssim\Controllers\Json\Game\GetInfo::class);
 

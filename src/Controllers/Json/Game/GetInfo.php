@@ -8,7 +8,7 @@ use ssim\Controllers\Json\Game\GameController;
 class GetInfo extends GameController {
 
   public function action(): Response {
-    return $this->respond($this->game->info());
+    return $this->respondWithData($this->game->info());
   }
 
 }

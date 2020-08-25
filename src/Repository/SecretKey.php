@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace ssim\Repository;
 
 use Selective\Config\Configuration as Config;
-use InvalidArgumentException;
 
 use ParagonIE\Paseto\Keys\SymmetricKey;
 
@@ -25,13 +24,13 @@ class SecretKey {
   private function setKey(): string{
     $key = $this->config->getString('secret_key');
     if('' === $key){
-      return $this->generateKey();
+      return base64_decode($this->generateKey());
     }
-    return $key;
+    return base64_decode($key);
   }
 
   private function generateKey(): string{
-    $key = new SymmetricKey(random_bytes(64));
+    $key = new SymmetricKey(random_bytes(32));
     $key = base64_encode($key->raw());
     $def = "define('SSIM_SECRET_KEY','%s');";
     $def = sprintf($def, $key);

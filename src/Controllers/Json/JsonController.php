@@ -21,12 +21,17 @@ abstract class JsonController {
     }
   }
 
-  protected function respond($data, $code = 200): Response {
-    $json = json_encode($data, JSON_PRETTY_PRINT);
+  public function respondWithData($data = null, $statusCode = 200): Response {
+    $payload = new JsonPayload($statusCode, $data);
+    return $this->respond($payload);
+  }
+
+  protected function respond(JsonPayload $payload): Response {
+    $json = json_encode($payload, JSON_PRETTY_PRINT);
     $this->response->getBody()->write($json);
 
     return $this->response->withHeader('Content-Type', 'application/json')
-      ->withStatus($code);
+      ->withStatus($payload->getStatusCode());
   }
   
   protected function resolveArg(string $name){
