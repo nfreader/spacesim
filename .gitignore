@@ -1,4 +1,4 @@
-config/conf
+app/conf
 vendor/
 logs/
 composer.lock
