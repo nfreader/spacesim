@@ -1,0 +1,14 @@
+{% extends 'base/site.html' %}
+{% block page %}
+<div class="card text-white bg-danger mb-3 p-3 d-flex flex-row align-items-center">
+  <div class="mr-3">
+    <i class="fas fa-exclamation-triangle h1"></i>
+  </div>
+  <div class="flex-fill">
+    <div class="card-title"><h4>{{app.name}} has encountered an error</h4>
+    <p class="mb-0">{{errorMessage}}</p>
+    </div>
+  </div>
+</div>
+{{dump()}}
+{% endblock %}

@@ -2,14 +2,14 @@
 
 use Slim\App;
 use Slim\Views\TwigMiddleware;
-use ssim\Middleware\TimerMiddleware;
-use ssim\Middleware\SessionMiddleware;
-use ssim\Guard\UserGuard;
+use Slim\Middleware\ErrorMiddleware;
+// use App\Middleware\HttpExceptionMiddleware;
+// use App\Middleware\UserMiddleware;
 return function (App $app) {
-    if(SSIM_DEBUG) $app->add(TimerMiddleware::class);
     $app->addBodyParsingMiddleware();
-    $app->add(SessionMiddleware::class);
-    $app->add(UserGuard::class);
-    $app->add(TwigMiddleware::class);
+    // $app->add(UserMiddleware::class);
     $app->addRoutingMiddleware();
+    $app->add(TwigMiddleware::createFromContainer($app, 'view'));
+    // $app->add(HttpExceptionMiddleware::class);
+    // $app->add(ErrorMiddleware::class);
 };

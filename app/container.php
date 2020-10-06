@@ -7,8 +7,8 @@ use Slim\App;
 use Slim\Factory\AppFactory;
 use Slim\Interfaces\RouteParserInterface;
 use Slim\Psr7\Factory\UriFactory;
+use Slim\Middleware\ErrorMiddleware;
 
-use Selective\Config\Configuration;
 
 use function DI\autowire;
 
@@ -17,15 +17,20 @@ use Slim\Views\TwigExtension;
 use Slim\Views\TwigMiddleware;
 use Slim\Views\TwigRuntimeLoader;
 
-use ssim\Extensions\TwigFlash;
-
 use ParagonIE\EasyDB\EasyDB;
 use ParagonIE\EasyDB\Factory;
 
+use App\Handler\DefaultErrorHandler;
+
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
 return [
   //Settings
-  Configuration::class => function(){
-    return new Configuration(require __DIR__ . "/config/settings.php");
+  'settings' => function () {
+    return require __DIR__ . '/settings.php';
   },
 
   // //App
@@ -50,52 +55,82 @@ return [
     return TwigMiddleware::createFromContainer($container->get(App::class), Twig::class);
   },
 
+  // Twig templates
+  Twig::class => function (ContainerInterface $container){
+    $config = (array)$container->get('settings');
+    $settings = $config['twig'];
+    $options = $settings['options'];
+    $options['cache'] = $options['cache_enabled'] ? $options['cache_path'] : false;
+
+    $twig = Twig::create($settings['paths'], $options);
+
+    $loader = $twig->getLoader();
+    $publicPath = (string)$config['public'];
+    if ($loader instanceof FilesystemLoader) {
+        $loader->addPath($publicPath, 'public');
+    }
+
+    $twig->addExtension(new \Twig\Extension\DebugExtension());
+    $twig->getEnvironment()->addGlobal('app', $config['app']);
+    $twig->getEnvironment()->addGlobal('modules', $config['modules']);
+
+    return $twig;
+
+  },
+  
+  'view' => static function(Container $container){
+    return $container->get(Twig::class);
+  },
+
   EasyDB::class => function (ContainerInterface $container){
-    $config = $container->get(Configuration::class);
-    $config = $config->getArray('database');
-    $options = [
-      \PDO::ATTR_PERSISTENT               => TRUE,
-      \PDO::ATTR_ERRMODE                  => \PDO::ERRMODE_EXCEPTION,
-      \PDO::ATTR_DEFAULT_FETCH_MODE       => \PDO::FETCH_OBJ,
-      \PDO::ATTR_STRINGIFY_FETCHES        => FALSE,
-      \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => TRUE,
-      \PDO::MYSQL_ATTR_COMPRESS           => TRUE
-    ];
+    $config = (array) $container->get('settings')['database'];
     try{
       $db = \ParagonIE\EasyDB\Factory::fromArray([
-        $config['DB_DSN'],
-        $config['DB_USER'],
-        $config['DB_PASS'],
-        $options
+        $config['dsn'] = $config['method'].':host='.$config['host'].';port='.$config['port'].';dbname='.$config['database'],
+        $config['username'],
+        $config['password'],
+        $config['flags']
       ]);
     } catch (Exception $e){
-      if(SSIM_DEBUG){
-        var_dump($config);
-        die($e->getMessage());
-      }
       return false;
     }
+    $db->prefix = $config['prefix'];
     return $db;
   },
 
-  // //Twig itself
-  Twig::class => function (ContainerInterface $container){
-    $config = $container->get(Configuration::class);
-    $twigSettings = $config->getArray('twig');
-    $twig = Twig::create($twigSettings['template_dir'], $twigSettings);
-    $twig->getEnvironment()->addGlobal('app', $config->getArray('application'));
-    $twig->getEnvironment()->addGlobal('game', $config->getArray('game'));
-    $twig->addExtension(new \Twig\Extension\DebugExtension());
-    $twig->addExtension(new TwigFlash());
-    return $twig;
+  ErrorMiddleware::class => function (ContainerInterface $container) {
+    $config = $container->get('settings')['error'];
+
+    $app = $container->get(App::class);
+
+    $errorMiddleware = new ErrorMiddleware(
+        $app->getCallableResolver(),
+        $app->getResponseFactory(),
+        (bool)$config['display_error_details'],
+        (bool)$config['log_errors'],
+        (bool)$config['log_error_details']
+    );
+
+    $errorMiddleware->setDefaultErrorHandler($container->get(DefaultErrorHandler::class));
+
+    return $errorMiddleware;
   },
 
-  // //Secret Key
-  // SecretKey::class => function(ContainerInterface $container) {
-  //   $config = $container->get(Configuration::class);
-  //   $sk = new SecretKey($config);
-  //   var_dump($sk);
-  //   return $sk->key;
-  // },
+  Session::class => function (ContainerInterface $container) {
+    $settings = $container->get('settings')['session'];
+    if (PHP_SAPI === 'cli') {
+        return new Session(new MockArraySessionStorage());
+    } else {
+        return new Session(new NativeSessionStorage($settings));
+    }
+  },
+
+  SessionInterface::class => function (ContainerInterface $container) {
+      return $container->get(Session::class);
+  },
+
+  SessionMiddleware::class => function (ContainerInterface $container) {
+      return new SessionMiddleware($container->get(SessionInterface::class));
+  },
 
 ];

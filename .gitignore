@@ -1,7 +1,5 @@
-app/config/constants.php
+config/conf
 vendor/
 logs/
-node_modules
-public/assets/css/*
 composer.lock
-resources/views/styles/*.css
+tmp/
