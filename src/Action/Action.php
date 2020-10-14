@@ -9,9 +9,11 @@ use Slim\Views\Twig;
 use App\Data\Payload\ActionPayload as Payload;
 use App\Data\Payload\ActionErrorPayload as Error;
 
-abstract class ActionHandler {
+abstract class Action {
 
   private $twig;
+
+  protected $template = 'home/home.twig';
 
   public function __construct(Twig $twig){
     $this->twig = $twig;
@@ -42,35 +44,8 @@ abstract class ActionHandler {
   }
 
   public function respondWithError(Error $payload): Response {
-    foreach($payload->getMessages() as $m){
-      $this->ErrorMessage($m);
-    }
     $response = $this->response->withStatus($payload->getStatusCode());
     return $this->twig->render($response, $this->template, ['messages'=>$this->messages]);
-  }
-
-  final public function ErrorMessage (string $text, bool $priority = false) {
-    $message = new \stdclass;
-    $message->text = $text;
-    $message->type = 'danger';
-    if($priority) unset($this->messages);
-    $this->messages[] = $message;
-  }
-
-  final public function Message (string $text, bool $priority = false) {
-    $message = new \stdclass;
-    $message->text = $text;
-    $message->type = 'info';
-    if($priority) unset($this->messages);
-    $this->messages[] = $message;
-  }
-
- final public function SuccessMessage (string $text, bool $priority = false) {
-    $message = new \stdclass;
-    $message->text = $text;
-    $message->type = 'success';
-    if($priority) unset($this->messages);
-    $this->messages[] = $message;
   }
 
 }

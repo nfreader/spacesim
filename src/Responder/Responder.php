@@ -13,6 +13,11 @@ final class Responder {
     $this->responseFactory = $responseFactory;
   }
 
+  public function createResponse(): ResponseInterface
+    {
+        return $this->responseFactory->createResponse()->withHeader('Content-Type', 'text/html; charset=utf-8');
+    }
+
   public function redirect(
     ResponseInterface $response,
     string $destination,
@@ -23,7 +28,11 @@ final class Responder {
         $destination = $this->urlGenerator->fullUrlFor($destination, $data, $queryParams);
     }
 
-    return $response->withStatus(302)->withHeader('Location', $destination);
+    return $response->withHeader('Location', $destination);
+  }
+
+  public function basicRedirect(ResponseInterface $response, $url){
+    return $response->withStatus(200)->withHeader('Location',$url);
   }
 
 }

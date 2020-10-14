@@ -2,11 +2,11 @@
 
 namespace App\Action;
 
-use App\Action\ActionHandler;
+use App\Action\Action;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 
-final class IndexAction extends ActionHandler
+final class Index extends Action
 {
 
   protected $template = 'home/home.twig';

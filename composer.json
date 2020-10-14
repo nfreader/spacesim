@@ -7,11 +7,13 @@
     "selective/config": "^0.1.1",
     "slim/twig-view": "^3.1",
     "paragonie/easydb": "^2.11",
-    "paragonie/paseto": "^1.0"
+    "paragonie/paseto": "^1.0",
+    "symfony/http-foundation": "^5.1"
   },
   "autoload": { 
       "psr-4": {
           "App\\": "src"
       }
   }
+
 }

@@ -20,6 +20,14 @@ class ActionPayload {
     return $this->statusCode;
   }
 
+  public function setData($data){
+    $this->data = $data;
+  }
+
+  public function setStatusCode(int $code = 200){
+    $this->statusCode = $code;
+  }
+
   public function getData($convert = true){
     if(is_array($this->data)) $this->data['messages'] = $this->messages;
     if(is_object($this->data)) $this->data->messages = $this->messages;

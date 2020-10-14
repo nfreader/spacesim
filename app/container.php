@@ -9,7 +9,6 @@ use Slim\Interfaces\RouteParserInterface;
 use Slim\Psr7\Factory\UriFactory;
 use Slim\Middleware\ErrorMiddleware;
 
-
 use function DI\autowire;
 
 use Slim\Views\Twig;
@@ -21,11 +20,13 @@ use ParagonIE\EasyDB\EasyDB;
 use ParagonIE\EasyDB\Factory;
 
 use App\Handler\DefaultErrorHandler;
-
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
+use App\Domain\User\Service\Auth\Auth;
+use App\Provider\DiscordAuthProvider;
 
 return [
   //Settings
@@ -132,5 +133,15 @@ return [
   SessionMiddleware::class => function (ContainerInterface $container) {
       return new SessionMiddleware($container->get(SessionInterface::class));
   },
+
+  //This might not be useful until it gets refactored
+  Auth::class => function (ContainerInterface $container){
+    return new Auth($container->get(Session::class));
+  },
+
+  DiscordAuthProvider::class => function (ContainerInterface $container) {
+    $settings = $container->get('settings')['auth']['discord'];
+    return new DiscordAuthProvider($settings);
+  }
 
 ];

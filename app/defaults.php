@@ -17,7 +17,8 @@ $settings['app'] = [
 ];
 
 $settings['modules'] = [
-  'register' => true
+  // 'register' => true
+  'discord_auth' => true,
 ];
 
 $settings['twig'] = [
@@ -54,6 +55,21 @@ $settings['database'] = [
     PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => TRUE,
     PDO::MYSQL_ATTR_COMPRESS           => TRUE
   ]
+];
+
+$settings['auth'] = [
+  'discord' => [
+    'OAUTH2_CLIENT_ID' => '',
+    'OAUTH2_CLIENT_SECRET' => '',
+    'authorizeURL' => 'https://discord.com/api/oauth2/authorize',
+    'tokenURL' => 'https://discord.com/api/oauth2/token',
+    'apiURLBase' => 'https://discord.com/api/users/@me'
+  ]
+];
+
+$settings['session'] = [
+  'name' => 'ssim',
+  'cache_expire' => 0,
 ];
 
 return $settings;
