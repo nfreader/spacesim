@@ -7,3 +7,4 @@ if (!$utf_set) {
 mb_http_output('UTF-8');
 
 (require __DIR__ . '/../app/bootstrap.php')->run();
+var_dump($_SESSION);

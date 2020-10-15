@@ -25,8 +25,11 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
+use App\Middleware\SessionMiddleware;
 use App\Domain\User\Service\Auth\Auth;
 use App\Provider\DiscordAuthProvider;
+
+use GuzzleHttp\Client as Guzzle;
 
 return [
   //Settings
@@ -139,9 +142,13 @@ return [
     return new Auth($container->get(Session::class));
   },
 
+  Guzzle::class => function (ContainerInterface $container){
+    return new Guzzle();
+  },
+
   DiscordAuthProvider::class => function (ContainerInterface $container) {
     $settings = $container->get('settings')['auth']['discord'];
-    return new DiscordAuthProvider($settings);
+    return new DiscordAuthProvider($settings, $container->get(Guzzle::class));
   }
 
 ];
