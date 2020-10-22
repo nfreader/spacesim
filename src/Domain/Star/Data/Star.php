@@ -8,7 +8,6 @@ class Star
 {
   public int $id;
   public string $name;
-  public string $fullName;
   public array $type;
   public int $x;
   public int $y;
@@ -22,7 +21,6 @@ class Star
       $this->x = $this->setXCoord($data->x);
       $this->y = $this->setYCoord($data->y);
     }
-    $this->fullName = $this->setFullName();
   }
 
   private function setId(int $id)
@@ -52,10 +50,5 @@ class Star
   private function setYCoord(int $y)
   {
     return $this->y = $y;
-  }
-
-  private function setFullName()
-  {
-    return $this->fullName = '<i class="fas fa-circle-notch"></i> ' . $this->name;
   }
 }

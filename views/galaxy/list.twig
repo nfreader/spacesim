@@ -17,7 +17,7 @@
 			{% for star in stars %}
 				<tr>
 					<th colspan="3">
-						<a href="{{url_for('home',{'id':star.id})}}">{{star.fullName|raw}}</a>
+						<a href="{{url_for('home',{'id':star.id})}}">{{star.name}}</a>
 					</th>
 				</tr>
 				{% for syst in star.systs %}
