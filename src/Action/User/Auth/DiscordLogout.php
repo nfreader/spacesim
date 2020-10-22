@@ -8,11 +8,11 @@ use Slim\Views\Twig;
 use App\Responder\Responder;
 use App\Domain\User\Service\Auth\DiscordAuthenticator;
 
-final class Discord extends Action
+final class DiscordLogout extends Action
 {
 
   private $twig;
-  private $user;
+  private $auth;
   private $responder;
 
   public function __construct(Twig $twig, DiscordAuthenticator $auth, Responder $responder)
@@ -25,12 +25,7 @@ final class Discord extends Action
 
   public function action(): Response
   {
-    if (isset($_GET['code'])) {
-      $this->auth->AuthenticateFromDiscord($_GET['code']);
-      return $this->responder->redirect($this->response, 'home');
-    } else {
-      $url = $this->auth->makeOAuthRequest();
-      return $this->responder->redirect($this->response, $url);
-    }
+    $this->auth->DiscordLogout();
+    return $this->responder->redirect($this->response, 'home');
   }
 }

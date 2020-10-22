@@ -2,17 +2,20 @@
 
 namespace App\Provider;
 
-class DiscordAuthProvider {
+class DiscordAuthProvider
+{
 
   private $settings;
   private $guzzle;
 
-  public function __construct($settings, $guzzle) {
+  public function __construct($settings, $guzzle)
+  {
     $this->settings = $settings;
     $this->guzzle = $guzzle;
   }
 
-  public function generateOAuthRequest(){
+  public function generateOAuthRequest()
+  {
     $params = array(
       'client_id' => $this->settings['OAUTH2_CLIENT_ID'],
       'redirect_uri' => 'http://localhost:8000/login/discord',
@@ -21,8 +24,9 @@ class DiscordAuthProvider {
     );
     return 'https://discordapp.com/api/oauth2/authorize' . '?' . http_build_query($params);
   }
-  
-  public function getDiscordUser($code) {
+
+  public function getDiscordUser(string $code)
+  {
     $headers = [
       'grant_type' => 'authorization_code',
       'client_id' => $this->settings['OAUTH2_CLIENT_ID'],
@@ -33,11 +37,19 @@ class DiscordAuthProvider {
     ];
     $response = $this->guzzle->request('POST', 'https://discord.com/api/oauth2/token', ['form_params' => $headers]);
     $response = json_decode((string) $response->getBody());
-    $user = $this->guzzle->request('GET','https://discord.com/api/users/@me', [
+    $user = $this->guzzle->request('GET', 'https://discord.com/api/users/@me', [
       'headers' => [
         'Authorization' => "Bearer $response->access_token",
       ]
     ]);
     return json_decode((string) $user->getBody());
+  }
+
+  public function generateLogoutUrl(string $code)
+  {
+    $params = [
+      'access_token' => $code
+    ];
+    return 'https://discordapp.com/api/oauth2/token/revoke' . '?' . http_build_query($params);
   }
 }

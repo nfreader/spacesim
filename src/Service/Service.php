@@ -5,11 +5,15 @@ namespace App\Service;
 use App\Data\Payload\ActionPayload as Payload;
 use App\Data\Payload\ActionErrorPayload as Error;
 
-class Service {
+class Service
+{
 
-  public function __construct(){
-    $this->payload = new Payload(200);
-    $this->error = new Error(); //Sword of Damocles
+  public $payload;
+  public $error;
+
+  public function __construct(Payload $payload, Error $error)
+  {
+    $this->payload = $payload;
+    $this->error = $error;
   }
-
 }
