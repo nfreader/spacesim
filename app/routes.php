@@ -14,5 +14,5 @@ return function (App $app) {
   // $app->post('/register', \App\Action\User\RegisterAccountAction::class)->setName('account.register');
 
   $app->get('/galaxy', \App\Action\Galaxy\ListGalaxy::class)->setName('galaxy');
-  $app->post('/star/addStar', \App\Action\Star\AddStar::class)->setName('star.add');
+  $app->post('/star/addStar', \App\Action\Star\AddStar::class)->setName('star.add')->setArgument('permission', 'GALAXY');
 };

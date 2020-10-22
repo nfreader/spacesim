@@ -48,7 +48,11 @@ class User
 
   public function hasPermission($permission)
   {
-    if ($this->permissions && $this->permissions[$permission] === true) return true;
+    if (
+      $this->permissions
+      && isset($this->permissions[$permission])
+      && $this->permissions[$permission] === true
+    ) return true;
     return false;
   }
 }

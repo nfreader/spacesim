@@ -36,7 +36,8 @@ use App\Domain\User\Repository\UserRepository;
 use App\Domain\User\Service\GetCurrentUser;
 use App\Routing\UrlGenerator;
 use App\Middleware\UrlGeneratorMiddleware;
-
+use App\Guard\UserGuard;
+use App\Service\Service;
 
 use App\Data\Payload\ActionPayload as Payload;
 use App\Data\Payload\ActionErrorPayload as Error;
@@ -184,6 +185,11 @@ return [
   Database::class => function (ContainerInterface $container) {
     return new Database($container->get(EasyDB::class), $container->get(Session::class));
   },
+
+  UserGuard::class => function (ContainerInterface $container) {
+    $session = $container->get(Session::class);
+    return new UserGuard($session->get('user'));
+  }
   // UrlGenerator::class => function () {
   //   return new UrlGenerator();
   // },
