@@ -1,6 +1,5 @@
 app/conf/
 vendor/
 logs/
-composer.lock
 tmp/
 
