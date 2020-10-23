@@ -28,6 +28,14 @@ class UserGuard
   {
     $routeContext = RouteContext::fromRequest($request);
     $route = $routeContext->getRoute();
+
+    //Check for whether or not the user is trying to access a route that
+    //requires them to be logged in.
+    if (!$route->getArgument('sessionNotRequired') && !$this->user) {
+      die("Forbidden");
+    }
+
+    //Check for whether or not the user has the route's required permission
     $permission = $route->getArgument('permission');
     if ($permission && !$this->user) die("Forbidden");
     if ($permission && false === $this->user->hasPermission($permission)) {
