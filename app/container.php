@@ -6,18 +6,12 @@ use DI\Container;
 use Slim\App;
 use Slim\Factory\AppFactory;
 use Slim\Interfaces\RouteParserInterface;
-use Slim\Psr7\Factory\UriFactory;
 use Slim\Middleware\ErrorMiddleware;
 
-use function DI\autowire;
-
 use Slim\Views\Twig;
-use Slim\Views\TwigExtension;
 use Slim\Views\TwigMiddleware;
-use Slim\Views\TwigRuntimeLoader;
 
 use ParagonIE\EasyDB\EasyDB;
-use ParagonIE\EasyDB\Factory;
 
 use App\Handler\DefaultErrorHandler;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -28,21 +22,14 @@ use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use GuzzleHttp\Client as Guzzle;
 
 use App\Repository\Database;
-use App\Middleware\SessionMiddleware;
-use App\Domain\User\Service\Auth\Auth;
 use App\Provider\DiscordAuthProvider;
 use App\Data\Permissions;
-use App\Domain\User\Repository\UserRepository;
 use App\Domain\User\Service\GetCurrentUser;
-use App\Routing\UrlGenerator;
-use App\Middleware\UrlGeneratorMiddleware;
 use App\Guard\UserGuard;
 use App\Service\Service;
 
 use App\Data\Payload\ActionPayload as Payload;
 use App\Data\Payload\ActionErrorPayload as Error;
-
-use Slim\Psr7\Request;
 
 return [
   //Settings
@@ -148,15 +135,6 @@ return [
     return $container->get(Session::class);
   },
 
-  SessionMiddleware::class => function (ContainerInterface $container) {
-    return new SessionMiddleware($container->get(SessionInterface::class), $container->get(CurrentUser::class));
-  },
-
-  //This might not be useful until it gets refactored
-  // Auth::class => function (ContainerInterface $container) {
-  //   return new Auth($container->get(Session::class), $container->get('settings')['permissions']);
-  // },
-
   Guzzle::class => function (ContainerInterface $container) {
     return new Guzzle();
   },
@@ -173,10 +151,10 @@ return [
   },
 
   CurrentUser::class => function (ContainerInterface $container) {
-    return new GetCurrentUser($container->get(UserRepository::class), $container->get(Session::class), $container->get(Permissions::class));
+    return new GetCurrentUser($container->get(Session::class), $container->get(Permissions::class));
   },
 
-  Service::class => function (ContainerInterface $container) {
+  Service::class => function () {
     $payload = new Payload();
     $error = new Error();
     return new Service($payload, $error);
@@ -190,12 +168,5 @@ return [
     $session = $container->get(Session::class);
     return new UserGuard($session->get('user'));
   }
-  // UrlGenerator::class => function () {
-  //   return new UrlGenerator();
-  // },
-
-  // UrlGeneratorMiddleware::class => function (ContainerInterface $container) {
-  //   return new UrlGeneratorMiddleware($container->get(UrlGenerator::class));
-  // }
 
 ];
