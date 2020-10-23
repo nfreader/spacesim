@@ -36,4 +36,10 @@ class Star extends Database
     }
     return $stars;
   }
+
+  public function getStar(int $id)
+  {
+    $star = $this->DB->row("SELECT id, `name`, x, y, `type` FROM $this->table WHERE id = ?", $id);
+    return new StarData($star);
+  }
 }

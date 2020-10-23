@@ -17,4 +17,5 @@ return function (App $app) {
 
   $app->get('/galaxy', \App\Action\Galaxy\ListGalaxy::class)->setName('galaxy');
   $app->post('/star/addStar', \App\Action\Star\AddStar::class)->setName('star.add')->setArgument('permission', 'GALAXY');
+  $app->get('/star/{id}', \App\Action\Star\ViewStar::class)->setName('star.view');
 };

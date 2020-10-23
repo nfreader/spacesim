@@ -1,37 +1,39 @@
 {% extends 'base/site.html' %}
 {% block page %}
-	<h1>{{star.name}}
-		<small class="text-muted">{{star.type.article}}
-			{{star.type.name}}</small>
-	</h1>
-	<hr>
-	<p class="lead">Located at
-		<code>[{{star.x}},{{star.y}}]</code>
-	</p>
-	<table class="table">
-		<thead>
+<h1>{{star.name}}
+	<small class="text-muted">{{star.type.article}}
+		{{star.type.name}}</small>
+</h1>
+<hr>
+<p class="lead">Located at
+	<code>[{{star.x}},{{star.y}}]</code>
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>System</th>
+			<th>Orbital Distance (AU)</th>
+			<th>Orbital Speed</th>
+			<th>Position</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for syst in systs %}
 			<tr>
-				<th>System</th>
-				<th>Orbital Distance (AU)</th>
-				<th>Orbital Speed</th>
-				<th>Position</th>
+				<th>
+					<a href="{{url_for('galaxy.syst',{'starid':star.id,'systid':syst.id})}}">{{syst.name}}</a>
+				</th>
+				<td>{{syst.distance}}
+					AU</td>
+				<td>{{syst.speed}}˚/day</td>
+				<td>{{syst.position}}</td>
 			</tr>
-		</thead>
-		<tbody>
-			{% for syst in systs %}
-				<tr>
-					<th>
-						<a href="{{url_for('galaxy.syst',{'starid':star.id,'systid':syst.id})}}">{{syst.name}}</a>
-					</th>
-					<td>{{syst.distance}}
-						AU</td>
-					<td>{{syst.speed}}˚/day</td>
-					<td>{{syst.position}}</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	{% if user.permissions.GALAXY %}
-		{# {% include 'syst/common/addSyst.twig' %} #}
-	{% endif %}
-{% endblock %}
+		{% else %}
+			<tr>
+				<td colspan="4" class="text-center">
+					<em>No Systems. Star is not traversable!</em>
+				</td>
+			</tr>
+		</td>
+	</tbody>
+</tr>{% endfor %}</tbody></table>{% if user.permissions.GALAXY %}{# {% include 'syst/common/addSyst.twig' %} #}{% endif %}{% endblock %}
