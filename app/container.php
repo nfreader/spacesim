@@ -101,6 +101,7 @@ return [
       return false;
     }
     $db->prefix = $config['prefix'];
+    $db->debug = $container->get('settings')['debug'];
     return $db;
   },
 
@@ -158,10 +159,6 @@ return [
     $payload = new Payload();
     $error = new Error();
     return new Service($payload, $error);
-  },
-
-  Database::class => function (ContainerInterface $container) {
-    return new Database($container->get(EasyDB::class), $container->get(Session::class));
   },
 
   UserGuard::class => function (ContainerInterface $container) {
