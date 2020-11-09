@@ -6,8 +6,6 @@ use App\Service\Service;
 use App\Domain\User\Data\User;
 use Symfony\Component\HttpFoundation\Session\Session;
 use App\Data\Permissions;
-use App\Data\Payload\ActionPayload as Payload;
-use App\Data\Payload\ActionErrorPayload as Error;
 
 class Auth extends Service
 {
@@ -18,7 +16,7 @@ class Auth extends Service
   {
     $this->session = $session;
     $this->permissions = $permissions;
-    parent::__construct(new Payload, new Error);
+    parent::__construct();
   }
 
   public function AuthenticateUser(User $user)

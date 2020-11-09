@@ -4,25 +4,24 @@ namespace App\Action\Star;
 
 use App\Action\Action;
 use Psr\Http\Message\ResponseInterface as Response;
-use Slim\Views\Twig;
-use App\Domain\Star\Repository\Star as Star;
+use App\Responder\Responder;
+use App\Domain\Star\Service\ViewStar as Star;
+use App\Domain\Syst\Service\GetSystsForStar;
 
 final class ViewStar extends Action
 {
 
   protected $template = 'star/view.twig';
-  protected $error_template = 'galaxy/list.twig';
 
-  public function __construct(Twig $twig, Star $star)
+  public function __construct(Responder $responder, Star $star)
   {
-    $this->twig = $twig;
     $this->star = $star;
-    parent::__construct($twig);
+    parent::__construct($responder);
   }
 
   public function action(): Response
   {
-    $this->payload->addData('star', $this->star->getStar($this->args['id']));
-    return $this->respond($this->payload);
+    $star = $this->star->getStar($this->args['star']);
+    return $this->respond($star);
   }
 }

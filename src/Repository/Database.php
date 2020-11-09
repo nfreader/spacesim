@@ -11,6 +11,8 @@ class Database
   protected $DB;
   protected $session;
 
+  private string $message = "An error occurred";
+
   public function __construct(DB $db, Session $session)
   {
     $this->DB = $db;
@@ -21,5 +23,15 @@ class Database
   {
     if (!$this->DB->prefix) return $query;
     return str_replace('tbl_', $this->DB->prefix, $query);
+  }
+
+  protected function setMessage($message)
+  {
+    $this->message = $message;
+  }
+
+  public function getMessage()
+  {
+    return $this->message;
   }
 }

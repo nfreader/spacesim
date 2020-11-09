@@ -11,6 +11,7 @@ class Star
   public array $type;
   public int $x;
   public int $y;
+  public array $systs = [];
 
   public function __construct(object $data = null)
   {
@@ -50,5 +51,9 @@ class Star
   private function setYCoord(int $y)
   {
     return $this->y = $y;
+  }
+  public function setSysts($systs)
+  {
+    return $this->systs = $systs;
   }
 }

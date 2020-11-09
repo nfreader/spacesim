@@ -5,8 +5,7 @@ namespace App\Domain\Star\Service;
 use App\Service\Service;
 use App\Domain\Star\Repository\Star as Repo;
 use App\Domain\Star\Data\Types;
-use App\Data\Payload\ActionPayload as Payload;
-use App\Data\Payload\ActionErrorPayload as Error;
+use App\Data\Payload\ResponsePayload as Payload;
 
 final class AddStar extends Service
 {
@@ -14,27 +13,32 @@ final class AddStar extends Service
   protected $repo;
   protected $types;
 
-  public function __construct(Repo $repo, Types $types, Payload $payload, Error $error)
+  public function __construct(Repo $repo, Types $types)
   {
     $this->repo = $repo;
     $this->types = $types;
     $this->types = $this->types->getTypes();
-    parent::__construct($payload, $error);
+    parent::__construct();
   }
 
   public function addStar($data)
   {
     $this->data = (object) $data;
     if (!$this->validate()) {
-      return $this->error;
+      $this->payload->returnError();
+      $this->payload->addData('stars', $this->repo->getStars());
+      return $this->payload;
     }
-    if (!$this->data->id = $this->repo->insert($this->data)) {
-      return $this->error;
+    $this->data->id = $this->repo->insert($this->data);
+    if (!is_int($this->data->id)) {
+      $this->payload->returnError();
+      $this->payload->errorMessage($this->data->id);
+      $this->payload->addData('stars', $this->repo->getStars());
+      return $this->payload;
     }
     $this->payload->SuccessMessage($this->data->name . " has been created!");
     $this->payload->addData('star', $this->data);
     return $this->payload;
-    var_dump($this->data);
   }
 
   private function validate()

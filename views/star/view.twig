@@ -1,13 +1,13 @@
 {% extends 'base/site.html' %}
+{% import 'syst/common/systMacros.twig' as syst_macro %}
 {% block page %}
-<h1>{{star.name}}
-	<small class="text-muted">{{star.type.article}}
-		{{star.type.name}}</small>
+<h1>{{star.name}}<small class="text-muted">
+		{{star.type.article}}
+		{{star.type.name}}
+		located at<code>[{{star.x}},{{star.y}}]</code>
+	</small>
 </h1>
 <hr>
-<p class="lead">Located at
-	<code>[{{star.x}},{{star.y}}]</code>
-</p>
 <table class="table">
 	<thead>
 		<tr>
@@ -18,15 +18,15 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% for syst in systs %}
+		{% for syst in star.systs %}
 			<tr>
 				<th>
-					<a href="{{url_for('galaxy.syst',{'starid':star.id,'systid':syst.id})}}">{{syst.name}}</a>
+					<a href="#">{{syst.name}}</a>
 				</th>
 				<td>{{syst.distance}}
 					AU</td>
 				<td>{{syst.speed}}˚/day</td>
-				<td>{{syst.position}}</td>
+				<td>{{syst_macro.systProgress(syst.position)}}</td>
 			</tr>
 		{% else %}
 			<tr>
@@ -36,4 +36,4 @@
 			</tr>
 		</td>
 	</tbody>
-</tr>{% endfor %}</tbody></table>{% if user.permissions.GALAXY %}{# {% include 'syst/common/addSyst.twig' %} #}{% endif %}{% endblock %}
+</tr>{% endfor %}</tbody></table>{% if user.permissions.GALAXY %}{% include 'syst/common/addSyst.twig' %}{% endif %}{% endblock %}

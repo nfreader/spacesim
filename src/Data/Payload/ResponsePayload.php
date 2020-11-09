@@ -2,7 +2,7 @@
 
 namespace App\Data\Payload;
 
-class ActionPayload
+class ResponsePayload
 {
 
   protected $statusCode = 200;
@@ -49,6 +49,12 @@ class ActionPayload
   public function getError()
   {
     return $this->error;
+  }
+
+  public function returnError(string $message = null)
+  {
+    if ($message) $this->ErrorMessage($message);
+    $this->error = true;
   }
 
   final public function ErrorMessage(string $text, bool $priority = false)

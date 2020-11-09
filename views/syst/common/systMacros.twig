@@ -1,0 +1,5 @@
+{% macro systProgress(percent = 50) %}
+	<div class="progress">
+		<div class="progress-bar" style="width: {{percent}}%" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" role="progressbar"></div>
+	</div>
+{% endmacro %}

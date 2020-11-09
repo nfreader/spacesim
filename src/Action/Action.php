@@ -2,29 +2,25 @@
 
 namespace App\Action;
 
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
-use App\Data\Payload\ActionPayload as Payload;
-use App\Data\Payload\ActionErrorPayload as Error;
+use App\Data\Payload\ResponsePayload as Payload;
+use App\Responder\Responder;
 
 abstract class Action
 {
 
-  private $twig;
+  private $responder;
 
   protected $template = 'home/home.twig';
   protected $error_template = 'error/error.twig';
 
-  public function __construct(Twig $twig)
+  public function __construct(Responder $responder)
   {
-    $this->twig = $twig;
-    $this->payload = new Payload;
-    $this->error = new Error;
+    $this->responder = $responder;
   }
 
-  public function __invoke(Request $request, Response $response, array $args = []): ResponseInterface
+  public function __invoke(Request $request, Response $response, array $args = []): Response
   {
     $this->request = $request;
     $this->response = $response;
@@ -38,22 +34,12 @@ abstract class Action
 
   abstract protected function action(): Response;
 
-  protected function respond($payload = []): Response
+  protected function respond($payload = null): Response
   {
-    if (!$payload) return $this->respondWithData(new Payload(200));
-    if ($payload instanceof Payload) return $this->respondWithData($payload);
-    if ($payload instanceof Error) return $this->respondWithError($payload);
-  }
-
-  public function respondWithData(Payload $payload): Response
-  {
-    $response = $this->response->withStatus($payload->getStatusCode());
-    return $this->twig->render($response, $this->template, $payload->getData());
-  }
-
-  public function respondWithError(Error $payload): Response
-  {
-    $response = $this->response->withStatus($payload->getStatusCode());
-    return $this->twig->render($response, $this->error_template);
+    $type = 'html';
+    if (!$payload) $payload = new Payload();
+    $payload->template = $this->template;
+    if ($payload->getError()) $payload->template = $this->error_template;
+    return $this->responder->handle($this->response, $payload);
   }
 }

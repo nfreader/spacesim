@@ -7,6 +7,7 @@ use JsonException;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Views\Twig;
+use App\Data\Payload\ResponsePayload as Payload;
 
 /**
  * A generic responder.
@@ -118,5 +119,14 @@ final class Responder
     $response->getBody()->write((string)json_encode($data, JSON_THROW_ON_ERROR | $options));
 
     return $response;
+  }
+
+  public function handle(ResponseInterface $response, Payload $payload)
+  {
+    if (isset($payload->redirect)) return $this->redirect($response, $payload->redirect);
+    if (isset($_GET['format']) && 'json' === $_GET['format']) {
+      return $this->json($response, $payload);
+    }
+    return $this->render($response, $payload->template, $payload->getData());
   }
 }

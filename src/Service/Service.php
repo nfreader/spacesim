@@ -2,18 +2,13 @@
 
 namespace App\Service;
 
-use App\Data\Payload\ActionPayload as Payload;
-use App\Data\Payload\ActionErrorPayload as Error;
+use App\Data\Payload\ResponsePayload as Payload;
 
 class Service
 {
 
-  public $payload;
-  public $error;
-
-  public function __construct(Payload $payload, Error $error)
+  public function __construct()
   {
-    $this->payload = $payload;
-    $this->error = $error;
+    $this->payload = new Payload;
   }
 }

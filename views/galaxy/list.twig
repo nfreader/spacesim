@@ -2,7 +2,7 @@
 {% block page %}
 	<h1>Galaxy Editor</h1>
 	<hr>
-	{% if not galaxy %}
+	{% if not stars %}
 		<p class="lead">It looks like this galaxy is empty. You can start by creating your first star system.</p>
 	{% endif %}
 	<table class="table">
@@ -17,14 +17,15 @@
 			{% for star in stars %}
 				<tr>
 					<th colspan="3">
-						<a href="{{url_for('home',{'id':star.id})}}">{{star.name}}</a>
+						<a href="{{url_for('star.view',{'star':star.id})}}">{{star.name}}</a>
 					</th>
 				</tr>
 				{% for syst in star.systs %}
 					<tr>
 						<td></td>
 						<td colspan="2">
-							<a href="{{url_for('galaxy.syst',{'starid':star.id,'systid':syst.id})}}">{{syst.fullname|raw}}</a>
+							<a href="{{url_for('syst.view',{'star':star.id, 'syst': syst.id})}}">{{syst.name}}</a>
+
 						</td>
 					</tr>
 					{% for spob in syst.spobs %}

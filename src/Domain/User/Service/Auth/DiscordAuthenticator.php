@@ -28,7 +28,8 @@ final class DiscordAuthenticator extends Auth
 
   public function makeOAuthRequest()
   {
-    return $this->provider->generateOAuthRequest();
+    $this->payload->redirect = $this->provider->generateOAuthRequest();
+    return $this->payload;
   }
 
   public function AuthenticateFromDiscord(string $code)
@@ -41,11 +42,9 @@ final class DiscordAuthenticator extends Auth
     $user = $this->ProvideAppUser($user, self::SERVICE);
     $user->id = $this->repo->AddAccount($user, self::SERVICE);
     $this->AuthenticateUser($user);
-    $this->session->getFlashBag()->add(
-      'success',
-      "You have successfully authenticated via Discord as $user->displayName"
-    );
-    return;
+    $this->payload->addData('user', $user);
+    $this->payload->SuccessMessage("You have successfully authenticated via Discord as $user->displayName");
+    return $this->payload;
   }
 
   public function DiscordLogout()
@@ -56,7 +55,8 @@ final class DiscordAuthenticator extends Auth
       'success',
       "You have been logged out"
     );
-    return;
+    $this->payload->redirect = 'home';
+    return $this->payload;
   }
 
   private function ProvideAppUser(object $data, string $service = 'internal')
