@@ -13,6 +13,8 @@ return function (App $app) {
   $app->get('/galaxy', \App\Action\Galaxy\ListGalaxy::class)->setName('galaxy');
   $app->get('/galaxy/{star}', \App\Action\Star\ViewStar::class)->setName('star.view');
   $app->get('/galaxy/{star}/{syst}', \App\Action\Syst\ViewSyst::class)->setName('syst.view');
+
   $app->post('/galaxy/addStar', \App\Action\Star\AddStar::class)->setName('star.add')->setArgument('permission', 'GALAXY');
   $app->post('/galaxy/{star}/addSyst', \App\Action\Syst\AddSyst::class)->setName('syst.add')->setArgument('permission', 'GALAXY');
+  $app->post('/galaxy/{star}/{syst}/addSpob', \App\Action\Spob\AddSpob::class)->setName('spob.add')->setArgument('permission', 'GALAXY');
 };

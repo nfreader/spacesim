@@ -23,6 +23,10 @@ final class AddSpob extends Action
 
   public function action(): Response
   {
-    return $this->response($this->payload);
+    $data = $this->request->getParsedBody();
+    $data['syst'] = $this->args['syst'];
+    $data['star'] = $this->args['star'];
+    $payload = $this->spob->addSpob($data);
+    return $this->respond($payload);
   }
 }

@@ -2,7 +2,7 @@
 	<div class="card-header">Add A New Port to
 		{{syst.name}}</div>
 	<div class="card-body">
-		<form action="" method="POST">
+		<form action="{{url_for('spob.add',{'star':star.id,'syst':syst.id})}}" method="POST">
 			<div class="mb-3 row">
 				<label for="portName" class="col-sm-2 col-form-label">Port Name</label>
 				<div class="col-sm-10">
@@ -26,6 +26,16 @@
 					<input type="text" class="form-control" id="techlevel" name="techlevel" required>
 				</div>
 			</div>
+			<div class="row mb-3">
+				<label class="col-sm-2 col-form-label"></label>
+				<div class="col-sm-10">
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" id="homeworld" name="homeworld">
+						<label class="form-check-label" for="homeworld">Port can be a Homeworld</label>
+					</div>
+				</div>
+			</div>
+
 			<div class="mb-3">
 				<label for="desc" class="form-label">Description</label>
 				<textarea class="form-control" id="desc" rows="3" name="desc"></textarea>
